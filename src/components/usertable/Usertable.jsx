@@ -138,8 +138,6 @@ class Usertable extends React.Component {
 
             <div>
 
-                <Title title="Správa Uživatelů" />
-
                 <Link to={'manager/editUser'}>
                     <Button variant="contained" color="secondary" className={classes.button}>
                         Nový uživatel
