@@ -115,7 +115,7 @@ class Login extends React.Component {
 
                                         <br />
                                         <br />
-                                        <Button fullWidth  label={"Přihlásit se"} component={Link} to={"/manager"} margin="normal" variant="contained" color="primary" >
+                                        <Button fullWidth  label={"Přihlásit se"} component={Link} to={this.props.location.pathname.slice(0, -6)} margin="normal" variant="contained" color="primary" >
                                           Přihlásit se
 
                                         </Button>

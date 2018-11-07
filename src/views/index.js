@@ -53,10 +53,10 @@ class Index extends React.Component {
                 <Typography variant="subtitle1" gutterBottom>
                     Burza smen
                 </Typography>
-                <Button variant="contained" color="secondary" component={Link} to="/employee">
+                <Button variant="contained" color="secondary" component={Link} to="/employee/login">
                     Employee
                 </Button>
-                <Button variant="contained" color="secondary" component={Link} to="/manager">
+                <Button variant="contained" color="secondary" component={Link} to="/manager/login">
                     Manager
                 </Button>
             </div>

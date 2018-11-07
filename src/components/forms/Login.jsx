@@ -7,7 +7,6 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom'
-import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -20,9 +19,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
-import Home from "../../views/employee/pages/home";
-import Profile from "../../views/employee/pages/profile";
-import Settings from "../../views/employee/pages/settings";
+
 
 
 function TabContainer({ children, dir }) {
@@ -154,7 +151,7 @@ if(this.props.bell===true) this.bell=true;
                     <Grid item xs={12} sm={6} >
 
                                 <Typography variant="subtitle1" gutterBottom>
-                                Jste přihlášen jako : {this.props.data.login}
+
                             </Typography>
 
                     </Grid>
@@ -169,7 +166,7 @@ if(this.props.bell===true) this.bell=true;
                     <Grid item xs={6} sm={3}>
 
 
-                            <Button href="#text-buttons"  component={Link}  to={this.props.data.logout} className={classes.button}>
+                            <Button href="#text-buttons"  component={Link} className={classes.button}>
                                 Odhlásit se
                             </Button>
 
@@ -181,17 +178,6 @@ if(this.props.bell===true) this.bell=true;
 
                     <Toolbar>
 
-                        <Tabs
-                            value={this.state.value}
-                            onChange={this.handleChange}
-                            indicatorColor="primary"
-                            textColor="primary"
-                            centered
-                        >
-                            {this.props.data.tabs.map(i =>
-                                <Tab value={i.value} label={i.label} component={Link} to={i.to} />
-                            )}
-                                    </Tabs>
 
                         <div className={classes.grow} />
 

@@ -13,7 +13,9 @@ import FirstPageIcon from '@material-ui/icons/FirstPage';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
-import Title from '../title/Title';
+import Title from '../../components/title/Title';
+import {Link} from 'react-router-dom';
+import Button from '@material-ui/core/Button';
 import TableHead from '@material-ui/core/TableHead';
 
 const actionsStyles = theme => ({
@@ -134,6 +136,16 @@ class Usertable extends React.Component {
 
         return (
 
+            <div>
+
+                <Title title="Správa Uživatelů" />
+
+                <Link to={'manager/editUser'}>
+                    <Button variant="contained" color="secondary" className={classes.button}>
+                        Nový uživatel
+                    </Button>
+                </Link>
+
 
             <Paper className={classes.root}>
                 <div className={classes.tableWrapper}>
@@ -197,7 +209,7 @@ class Usertable extends React.Component {
                     </Table>
                 </div>
             </Paper>
-
+            </div>
         );
     }
 }
