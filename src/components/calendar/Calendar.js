@@ -19,11 +19,13 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import {events, rows} from "../../data"
+import {events,rows} from "../../data"
 import FormControl from '@material-ui/core/FormControl';
 import Usertable from "../usertable/Usertable";
+import Autocomplete from "../autocomplete/Autocomplete";
+import update from 'react-addons-update';
 
+import "../../functions";
 
 let ExampleControlSlot = createSlot();
 
@@ -34,6 +36,7 @@ const localizer = BigCalendar.momentLocalizer(moment);
 
 class Cal extends Component {
 
+
     constructor(props) {
 
         super(props);
@@ -43,15 +46,20 @@ class Cal extends Component {
         // props.value = props.value || '';
 
         this.state = {
-            events: events, dialoginfo: {
+            events: events,
+            dialoginfo: {
                 id: 0,
                 title: 'Volne',
                 start: new Date(new Date().setHours(new Date().getHours() - 3)),
                 end: new Date(new Date().setHours(new Date().getHours() + 3)),
                 capacity: 5,
-                note: ""
-            }, isAddModalOpen: false,
+                note: "",
+                employees:[]
+            },
+            isAddModalOpen: false,
             isEditModalOpen: false,
+            searchEmployee: "",
+
         };
 
         if (this.props.bell === true) this.bell = true;
@@ -65,7 +73,7 @@ class Cal extends Component {
 
         if (title && capacity) {
 
-           this.setState({
+            this.setState({
                 events: [
                     ...this.state.events,
                     {
@@ -97,6 +105,34 @@ class Cal extends Component {
             });
         }
     };
+    handleSearchChange = (value) => {
+        this.setState({
+            searchEmployee: value,
+        });
+    };
+
+    handleAdd = (value) => {
+        console.log(this.state.searchEmployee.value);
+        if(this.state.searchEmployee && this.state.searchEmployee.value)
+        this.setState({
+            dialoginfo: {
+                ...this.state.dialoginfo,
+                employees: [...this.state.dialoginfo.employees,this.state.searchEmployee.value]
+            }
+       });
+        console.log(this.state);
+    };
+
+    handleSubmit = () => {
+
+            this.setState({
+                events: update(this.state.events, {[this.state.dialoginfo.id]: {$set: this.state.dialoginfo}})
+            });
+        console.log(this.state);
+
+        this.handleClose();
+    };
+
     toggleEditModal = event => {
         if (!this.state.isAddModalOpen) {
             this.setState({
@@ -104,6 +140,24 @@ class Cal extends Component {
                 isEditModalOpen: !this.state.isEditModalOpen,
             });
         }
+    };
+    handleDialogChange = prop => event => {
+
+
+        //  console.log(event.target.type);
+        // console.log(event.target.value);
+        let val = event.target.value;
+        if (event.target.type === "datetime-local") {
+            console.log(val);
+            val = new Date(val);
+
+        }
+
+        this.setState(prevState => {
+            return {
+                [prop]: prevState.dialoginfo[prop] = val
+            };
+        });
     };
 
 
@@ -117,7 +171,7 @@ class Cal extends Component {
     }
 
     render() {
-        const { classes } = this.props;
+        const {classes} = this.props;
         let showEvents = [];
 
         if (this.props.freeshifts) {
@@ -148,21 +202,17 @@ class Cal extends Component {
             );
         }
 
-        console.log(this.state.events);
-
 
         let dialogTitle = this.state.dialoginfo.title || "";
 
-        let dialogStartDate = this.state.dialoginfo.start.toISOString().substr(0, 10) || "";
-        let dialogStartTime = this.state.dialoginfo.start.toISOString().substr(11, 5) || "";
-
-        let dialogEndDate = this.state.dialoginfo.end.toISOString().substr(0, 10) || "";
-        let dialogEndTime = this.state.dialoginfo.end.toISOString().substr(11, 5) || "";
 
         let dialogCapacity = this.state.dialoginfo.capacity || "";
         let dialogNote = this.state.dialoginfo.note || "";
 
-        let dialogusers = this.state.dialoginfo.employees || [];
+         let options=rows.map(user => ({
+            value: user,
+            label: user.firstname+" "+user.lastname,
+        }));
 
 
         return (
@@ -208,15 +258,10 @@ class Cal extends Component {
                                     <InputLabel htmlFor="adornment-amount">Od</InputLabel>
                                     <Input
                                         id="adornment-amount"
-                                        type="date"
-                                        value={dialogStartDate}
+                                        type="datetime-local"
+                                        value={this.state.dialoginfo.start.toDatetimeLocal() || ""}
                                         label="Od"
-                                    />
-                                    <Input
-                                        id="adornment-amount"
-                                        type="time"
-                                        value={dialogStartTime}
-                                        label="Od"
+                                        onChange={this.handleDialogChange('start')}
                                     />
                                 </FormControl>
                             </Grid>
@@ -225,66 +270,87 @@ class Cal extends Component {
                                     <InputLabel htmlFor="adornment-amount">Do</InputLabel>
                                     <Input
                                         id="adornment-amount"
-                                        type="date"
-                                        value={dialogEndDate}
+                                        type="datetime-local"
+                                        value={this.state.dialoginfo.end.toDatetimeLocal() || ""}
                                         label="Do"
-
-                                    />
-                                    <Input
-                                        id="adornment-amount"
-                                        type="time"
-                                        value={dialogEndTime}
-                                        label="Do"
+                                        onChange={this.handleDialogChange('end')}
                                     />
                                 </FormControl>
                             </Grid>
                             <Grid item xs={4}>
                                 <FormControl className={classes.formControl} variant="outlined">
-                                <InputLabel htmlFor="adornment-amount">Kapacita</InputLabel>
-                                <Input
-                                    autoFocus
-                                    margin="dense"
-                                    id="name"
-                                    label="Kapacita"
-                                    type="number"
-                                    value={dialogCapacity}
+                                    <InputLabel htmlFor="adornment-amount">Kapacita</InputLabel>
+                                    <Input
+                                        autoFocus
+                                        margin="dense"
+                                        id="name"
+                                        label="Kapacita"
+                                        type="number"
+                                        value={this.state.dialoginfo.capacity || ""}
+                                        onChange={this.handleDialogChange('capacity')}
                                     />
                                 </FormControl>
                             </Grid>
                         </Grid>
-<br />
+                        <br/>
                         <Grid container spacing={12}>
                             <Grid item xs={12}>
-                                <FormControl  fullWidth className={classes.formControl} variant="outlined">
-                                <InputLabel htmlFor="adornment-amount"></InputLabel>
-                            <TextField
-                                id="outlined-textarea"
-                                label="Poznámka"
-                                placeholder="Placeholder"
-                                multiline
-                                margin="normal"
-                                variant="outlined"
-                                value={dialogNote}
+                                <FormControl fullWidth className={classes.formControl} variant="outlined">
+                                    <InputLabel htmlFor="adornment-amount"></InputLabel>
+                                    <TextField
+                                        id="outlined-textarea"
+                                        label="Poznámka"
+                                        placeholder="Placeholder"
+                                        multiline
+                                        margin="normal"
+                                        variant="outlined"
+                                        value={dialogNote}
+                                        onChange={this.handleDialogChange('note')}
+                                        className={classes.textField}
 
-                                className={classes.textField}
-
-                            />    </FormControl>
+                                    /> </FormControl>
                             </Grid>
-                    </Grid>
+                        </Grid>
 
                         <Grid container spacing={12}>
+                            <Grid item xs={8}>
+
+                                <Autocomplete
+                                    value={this.state.searchEmployee}
+                                    onChange={this.handleSearchChange}
+                                    onSubmit={this.handleSearchSubmit}
+
+                                    id="input-with-icon-grid"
+                                    label="Hledat Uživatele"
+                                    className={classes.textField}
+                                    options={options}
+                                />
+                            </Grid>
+                                <Grid item xs={4}>
+                                <Button onClick={this.handleAdd}>
+                                    Přidat uživatele
+                                </Button>
+
+                            </Grid>
+                        </Grid>
+                        <Grid container spacing={12}>
                             <Grid item xs={12}>
-                                <Usertable data={dialogusers}/>
+                                <Usertable data={this.state.dialoginfo.employees || []}/>
                             </Grid>
                         </Grid>
 
                     </DialogContent>
                     <DialogActions>
+                        <Button onClick={this.handleSubmit} color="secondary">
+                            Uložit
+                        </Button>
+
                         <Button onClick={this.handleClose} color="primary">
                             Zrušit
                         </Button>
-                        <Button onClick={this.handleClose} color="secondary">
-                            Uložit
+
+                        <Button onClick={this.handleClose}>
+                            Odstranit
                         </Button>
                     </DialogActions>
                 </Dialog>

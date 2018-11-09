@@ -17,6 +17,7 @@ import Title from '../../components/title/Title';
 import {Link} from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import TableHead from '@material-ui/core/TableHead';
+import {events} from "../../data";
 
 const actionsStyles = theme => ({
     root: {
@@ -51,10 +52,6 @@ class TablePaginationActions extends React.Component {
 
         return (
             <div className={classes.root}>
-
-
-
-
                 <IconButton
                     onClick={this.handleFirstPageButtonClick}
                     disabled={page === 0}
@@ -115,10 +112,17 @@ const styles = theme => ({
 });
 
 class Usertable extends React.Component {
-    state = {
-        rows: this.props.data.sort((a, b) => (a.id < b.id ? -1 : 1)),
-        page: 0,
-        rowsPerPage: 5,
+
+
+    constructor(props) {
+
+        super(props);
+
+        this.state = {
+            page: 0,
+            rowsPerPage: 5,
+        };
+
     };
 
     handleChangePage = (event, page) => {
@@ -131,19 +135,13 @@ class Usertable extends React.Component {
 
     render() {
         const { classes } = this.props;
-        const { rows, rowsPerPage, page } = this.state;
-        const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+        const { rowsPerPage, page } = this.state;
 
+        let rows=this.props.data.sort((a, b) => (a.id < b.id ? -1 : 1));
+        const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
         return (
 
             <div>
-
-                <Link to={'manager/editUser'}>
-                    <Button variant="contained" color="secondary" className={classes.button}>
-                        Nový uživatel
-                    </Button>
-                </Link>
-
 
             <Paper className={classes.root}>
                 <div className={classes.tableWrapper}>
