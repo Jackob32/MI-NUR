@@ -173,11 +173,12 @@ if(this.props.bell===true) this.bell=true;
                                 Odhlásit se
                             </Button>
 
-                        <Button href="#text-buttons"  component={Link}  to={this.props.data.switch} className={classes.button}>
-                            Prepnout roli
-                        </Button>
-
-
+                        {false &&
+                            <Button href="#text-buttons" component={Link} to={this.props.data.switch}
+                                    className={classes.button}>
+                                Prepnout roli
+                            </Button>
+                        }
                     </Grid>
                     <Grid item xs={12}>
                 <AppBar position="static" color="default">

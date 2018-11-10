@@ -19,6 +19,8 @@ import Button from '@material-ui/core/Button';
 import TableHead from '@material-ui/core/TableHead';
 import {events} from "../../data";
 
+
+
 const actionsStyles = theme => ({
     root: {
         flexShrink: 0,
@@ -137,8 +139,10 @@ class Usertable extends React.Component {
         const { classes } = this.props;
         const { rowsPerPage, page } = this.state;
 
+
         let rows=this.props.data.sort((a, b) => (a.id < b.id ? -1 : 1));
         const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+
         return (
 
             <div>

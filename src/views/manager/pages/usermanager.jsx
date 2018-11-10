@@ -1,18 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableFooter from '@material-ui/core/TableFooter';
-import TablePagination from '@material-ui/core/TablePagination';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import IconButton from '@material-ui/core/IconButton';
-import FirstPageIcon from '@material-ui/icons/FirstPage';
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-import LastPageIcon from '@material-ui/icons/LastPage';
 import Title from '../../../components/title/Title';
 import Usertable from '../../../components/usertable/Usertable';
 import {events, rows} from '../../../data';
@@ -57,6 +45,7 @@ class Usermanager extends React.Component {
             isAddModalOpen: false,
             isEditModalOpen: false,
         edituser:{
+            id:rows.length,
             firstname: "",
                 lastname: "",
             worktime: 0,
@@ -78,6 +67,7 @@ class Usermanager extends React.Component {
         this.setState({
             rows: [...this.state.rows,this.state.edituser],
             edituser:{
+                id:this.state.rows.length+1,
                 firstname: "",
                 lastname: "",
                 worktime: 0,
@@ -109,7 +99,7 @@ class Usermanager extends React.Component {
 
                 <Title title="Správa Uživatelů" />
 
-                    <Button variant="contained" onClick={this.handleClickOpen}  color="secondary" className={classes.button}>
+                    <Button variant="contained" onClick={this.handleClickOpen}  color="primary">
                         Nový uživatel
                     </Button>
 
@@ -133,7 +123,7 @@ class Usermanager extends React.Component {
                         </DialogContentText>
 
 
-                        <Grid container spacing={12}>
+                        <Grid container spacing={16}>
                             <Grid item xs={4}>
                                 <FormControl className={classes.formControl} variant="outlined">
                                     <InputLabel htmlFor="adornment-amount">Jméno</InputLabel>
@@ -172,7 +162,7 @@ class Usermanager extends React.Component {
                             </Grid>
                         </Grid>
                         <br/>
-                        <Grid container spacing={12}>
+                        <Grid container spacing={16}>
                             <Grid item xs={4}>
                                 <FormControl className={classes.formControl} variant="outlined">
                                     <InputLabel htmlFor="adornment-amount">Uvazek</InputLabel>

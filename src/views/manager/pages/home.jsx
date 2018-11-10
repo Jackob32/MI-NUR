@@ -135,6 +135,7 @@ class Home extends React.Component {
                           partialshifts={this.state.partialshifts}
                           fullshifts={this.state.fullshifts}
                           searchEmployee={this.state.searchEmployee}
+                          auth={"manager"}
                     />
 
                 </Grid>

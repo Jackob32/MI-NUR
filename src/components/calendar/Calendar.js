@@ -19,7 +19,7 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
-import {events,rows} from "../../data"
+import {events, rows} from "../../data"
 import FormControl from '@material-ui/core/FormControl';
 import Usertable from "../usertable/Usertable";
 import Autocomplete from "../autocomplete/Autocomplete";
@@ -34,8 +34,8 @@ const localizer = BigCalendar.momentLocalizer(moment);
 
 // the dummy calendar data
 
-class Cal extends Component {
 
+class Cal extends Component {
 
     constructor(props) {
 
@@ -44,6 +44,7 @@ class Cal extends Component {
         //here we create the filtering based on given props
 
         // props.value = props.value || '';
+
 
         this.state = {
             events: events,
@@ -54,7 +55,7 @@ class Cal extends Component {
                 end: new Date(new Date().setHours(new Date().getHours() + 3)),
                 capacity: 5,
                 note: "",
-                employees:[]
+                employees: []
             },
             isAddModalOpen: false,
             isEditModalOpen: false,
@@ -62,37 +63,53 @@ class Cal extends Component {
 
         };
 
+
+
         if (this.props.bell === true) this.bell = true;
 
     };
 
-    handleSelect = ({start, end, slots, action}) => {
-
-        var title = window.prompt('Jmeno Směny');
-        var capacity = window.prompt('Kapacita směny');
-
-        if (title && capacity) {
-
-            this.setState({
-                events: [
-                    ...this.state.events,
-                    {
-                        start,
-                        end,
-                        title,
-                        capacity,
-                        note: "",
-                        employees: [],
-                    },
-
-                ],
-                isAddModalOpen: false,
-                isEditModalOpen: false,
-            })
-        }
+    static getDefaultProps() {
+        return {
+            freeshifts: true,
+            partialshifts: true,
+            fullshifts: true,
+            searchEmployee: ""
+        };
     }
+
+
+    handleSelect = ({start, end, slots, action}) => {
+        if (this.props.auth && this.props.auth === "manager") {
+            var title = window.prompt('Jmeno Směny');
+            var capacity = window.prompt('Kapacita směny');
+
+            if (title && capacity) {
+                let id = this.state.events.length;
+                this.setState({
+                    events: [
+                        ...this.state.events,
+                        {
+                            id,
+                            start,
+                            end,
+                            title,
+                            capacity,
+                            note: "",
+                            employees: [],
+                        },
+                    ],
+                    isAddModalOpen: false,
+                    isEditModalOpen: false,
+                })
+            }
+        }
+    };
     handleClickOpen = (e) => {
-        this.setState({isEditModalOpen: true, dialoginfo: e});
+        if (this.props.auth && this.props.auth === "manager")
+            this.setState({isEditModalOpen: true, dialoginfo: this.state.events[e.id]});
+
+
     };
     handleClose = () => {
         this.setState({isEditModalOpen: false});
@@ -110,29 +127,29 @@ class Cal extends Component {
             searchEmployee: value,
         });
     };
-
     handleAdd = (value) => {
-        console.log(this.state.searchEmployee.value);
-        if(this.state.searchEmployee && this.state.searchEmployee.value)
-        this.setState({
-            dialoginfo: {
-                ...this.state.dialoginfo,
-                employees: [...this.state.dialoginfo.employees,this.state.searchEmployee.value]
-            }
-       });
-        console.log(this.state);
-    };
-
-    handleSubmit = () => {
+        //  console.log(this.state.searchEmployee.value);
+        if (this.state.searchEmployee && this.state.searchEmployee.value) {
 
             this.setState({
-                events: update(this.state.events, {[this.state.dialoginfo.id]: {$set: this.state.dialoginfo}})
+                dialoginfo: {
+                    ...this.state.dialoginfo,
+                    employees: [...this.state.dialoginfo.employees, this.state.searchEmployee.value]
+                }
             });
-        console.log(this.state);
+        }
+        //  console.log(this.state);
+    };
+    handleSubmit = () => {
+
+        if (!this.state.dialoginfo.id) this.state.dialoginfo.id = this.state.events.length;
+
+        this.setState({
+            events: update(this.state.events, {[this.state.dialoginfo.id]: {$set: this.state.dialoginfo}})
+        });
 
         this.handleClose();
     };
-
     toggleEditModal = event => {
         if (!this.state.isAddModalOpen) {
             this.setState({
@@ -160,30 +177,24 @@ class Cal extends Component {
         });
     };
 
-
-    getDefaultProps() {
-        return {
-            freeshifts: true,
-            partialshifts: true,
-            fullshifts: true,
-            searchEmployee: ""
-        };
-    }
-
     render() {
+
+
         const {classes} = this.props;
         let showEvents = [];
 
-        if (this.props.freeshifts) {
+        if (this.props.freeshifts || (this.props.auth && this.props.auth === "employee")) {
             showEvents = showEvents.concat(this.state.events.filter(event => event.employees.length === 0));
         }
-        if (this.props.partialshifts) {
+        if (this.props.partialshifts || (this.props.auth && this.props.auth === "employee")) {
             showEvents = showEvents.concat(this.state.events.filter(event => event.capacity > event.employees.length && event.employees.length !== 0));
         }
 
-        if (this.props.fullshifts) {
+        if (this.props.fullshifts || (this.props.auth && this.props.auth === "employee")) {
             showEvents = showEvents.concat(this.state.events.filter(event => event.capacity <= event.employees.length));
         }
+
+        console.log(showEvents);
 
         if (this.props.searchEmployee !== "") {
             showEvents = showEvents.filter(
@@ -202,17 +213,12 @@ class Cal extends Component {
             );
         }
 
-
-        let dialogTitle = this.state.dialoginfo.title || "";
-
-
-        let dialogCapacity = this.state.dialoginfo.capacity || "";
-        let dialogNote = this.state.dialoginfo.note || "";
-
-         let options=rows.map(user => ({
+        let options = rows.map(user => ({
             value: user,
-            label: user.firstname+" "+user.lastname,
+            label: user.firstname + " " + user.lastname,
         }));
+        console.log("this.state");
+        console.log(this.state);
 
 
         return (
@@ -222,17 +228,29 @@ class Cal extends Component {
 
 
                 </ExampleControlSlot.Entry>
-                <BigCalendar
-                    selectable
-                    localizer={localizer}
-                    events={showEvents}
-                    defaultView={BigCalendar.Views.WEEK}
-                    scrollToTime={new Date(1970, 1, 1, 6)}
-                    defaultDate={new Date()}
-                    onSelectEvent={event => this.handleClickOpen(event)}
-                    onSelectSlot={this.handleSelect}
-                    style={{height: "100vh"}}
-                />
+
+                {this.props.auth === "manager" ? <BigCalendar
+                        selectable
+                        localizer={localizer}
+                        events={showEvents}
+                        defaultView={BigCalendar.Views.WEEK}
+                        scrollToTime={new Date(1970, 1, 1, 6)}
+                        defaultDate={new Date()}
+                        onSelectEvent={event => this.handleClickOpen(event)}
+                        onSelectSlot={this.handleSelect}
+                        style={{height: "100vh"}}
+                    />
+                    : <BigCalendar
+                        selectable
+                        localizer={localizer}
+                        events={showEvents}
+                        defaultView={BigCalendar.Views.WEEK}
+                        scrollToTime={new Date(1970, 1, 1, 6)}
+                        defaultDate={new Date()}
+                        style={{height: "100vh"}}
+                    />
+
+                }
 
                 <Dialog
                     open={this.state.isEditModalOpen}
@@ -247,7 +265,7 @@ class Cal extends Component {
 
 
                         <DialogContentText>
-                            {dialogTitle}
+                            {this.state.dialoginfo.title || ""}
                             <br/> <br/> <br/>
                         </DialogContentText>
 
@@ -304,7 +322,7 @@ class Cal extends Component {
                                         multiline
                                         margin="normal"
                                         variant="outlined"
-                                        value={dialogNote}
+                                        value={this.state.dialoginfo.note || ""}
                                         onChange={this.handleDialogChange('note')}
                                         className={classes.textField}
 
@@ -326,7 +344,7 @@ class Cal extends Component {
                                     options={options}
                                 />
                             </Grid>
-                                <Grid item xs={4}>
+                            <Grid item xs={4}>
                                 <Button onClick={this.handleAdd}>
                                     Přidat uživatele
                                 </Button>

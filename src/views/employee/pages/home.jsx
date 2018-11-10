@@ -45,7 +45,10 @@ class Home extends React.Component {
 
                 <Title title="Přehled" />
 
-                <Cal />
+                <Cal
+                    searchEmployee={"Petr"}
+                    auth={"employee"}
+                />
 
             </div>
         );
