@@ -33,7 +33,13 @@ var navData = {
         }
 
     ],
-    login: "Jan Král (vedoucí)",
+
+    login: {
+        firstname:"Jan",
+        lastname:"Král",
+email:"jan.kral@gmail.com"
+
+    },
 
     logout: "/manager/login",
     switch: "/employee",
@@ -44,18 +50,16 @@ var navData = {
 
     class Manager extends React.Component {
         state = {
+            navData:navData,
             open: false,
         };
 
-        handleClose = () => {
+        handleSubmit = (user) => {
             this.setState({
-                open: false,
-            });
-        };
+                navData: {...this.state.navData,
+                    login: user
+                },
 
-        handleClick = () => {
-            this.setState({
-                open: true,
             });
         };
 
@@ -71,13 +75,14 @@ var navData = {
                         justify="center"
                     >
                         <Grid item xs={8}>
-                            <Navigation data={navData}/>
+                            <Navigation data={this.state.navData}/>
                         </Grid>
 
                         <Grid item xs={8}>
                     <Switch>
                         <Route path={'/manager'} component={Home} exact/>
-                        <Route path={'/manager/profile'} component={Profile}/>
+
+                        <Route path={'/manager/profile'} render={(props) => <Profile {...props} login={this.state.navData.login} handleSubmit={this.handleSubmit} />} />
                         <Route path={'/manager/usermanager'} component={Usermanager}/>
                     </Switch>
                     </Grid>

@@ -154,7 +154,9 @@ if(this.props.bell===true) this.bell=true;
                     <Grid item xs={12} sm={6} >
 
                                 <Typography variant="subtitle1" gutterBottom>
-                                Jste přihlášen jako : {this.props.data.login}
+                                Jste přihlášen jako : {this.props.data.login.firstname}
+                                    {" "}
+                                {this.props.data.login.lastname}
                             </Typography>
 
                     </Grid>
