@@ -1,5 +1,13 @@
 
-@import '~typeface-roboto';
 .rbc-event {
     z-index: 999 !important;
+}
+.rbc-addons-dnd .rbc-addons-dnd-resize-ns-anchor .rbc-addons-dnd-resize-ns-icon {
+    display: none;
+    border-top: 5px double !important;
+    margin: -3px auto !important;
+    width: 30px !important;
+    cursor: ns-resize;
+    padding: 0 !important;
+    height: 10px !important;
 }

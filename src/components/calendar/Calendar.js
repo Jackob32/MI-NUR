@@ -25,9 +25,10 @@ import Usertable from "../usertable/Usertable";
 import Autocomplete from "../autocomplete/Autocomplete";
 import update from 'react-addons-update';
 import 'typeface-roboto';
-import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop'
+import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
+import "react-big-calendar/lib/css/react-big-calendar.css";
 
-import 'react-big-calendar/lib/addons/dragAndDrop/styles.less'
+import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop'
 
 import "../../functions";
 
@@ -194,7 +195,7 @@ class Cal extends Component {
             events: nextEvents,
         });
 
-        alert(`${event.title} was resized to ${start}-${end}`)
+       // alert(`${event.title} was resized to ${start}-${end}`)
     }
     moveEvent({ event, start, end, isAllDay: droppedOnAllDaySlot }) {
         const  events  = this.state.events;
