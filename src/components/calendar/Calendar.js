@@ -1,3 +1,4 @@
+
 import React, {Component} from "react";
 import BigCalendar from "react-big-calendar";
 // the moment library for getting correct time and date
@@ -31,6 +32,10 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop'
 
 import "../../functions";
+
+require('moment/locale/cs');
+moment.locale('cs');
+
 
 let ExampleControlSlot = createSlot();
 
@@ -274,7 +279,7 @@ class Cal extends Component {
                 </ExampleControlSlot.Entry>
 
                 {this.props.auth === "manager" ? <DragAndDropCalendar
-
+                        culture={"cs-CZ"}
                         selectable
                         resizable
                         localizer={localizer}
@@ -289,6 +294,7 @@ class Cal extends Component {
                         onEventResize={this.resizeEvent}
                     />
                     : <BigCalendar
+                        culture={"cs-CZ"}
                         selectable
                         localizer={localizer}
                         events={showEvents}
