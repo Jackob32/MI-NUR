@@ -13,6 +13,7 @@ import Chip from '@material-ui/core/Chip';
 import MenuItem from '@material-ui/core/MenuItem';
 import CancelIcon from '@material-ui/icons/Cancel';
 import { emphasize } from '@material-ui/core/styles/colorManipulator';
+import FormControl from "@material-ui/core/FormControl/FormControl";
 
 
 
@@ -193,6 +194,9 @@ class IntegrationReactSelect extends React.Component {
                 '& input': {
                     font: 'inherit',
                 },
+
+                padding: theme.spacing.unit,
+
             }),
         };
 
@@ -201,6 +205,7 @@ class IntegrationReactSelect extends React.Component {
             <div className={classes.root}>
                 <NoSsr>
                     <Select
+                        className={classes.formControl}
                         classes={classes}
                         styles={selectStyles}
                         options={this.props.options}

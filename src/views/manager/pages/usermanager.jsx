@@ -109,8 +109,7 @@ class Usermanager extends React.Component {
                     open={this.state.isEditModalOpen}
                     onClose={this.handleClose}
                     aria-labelledby="responsive-dialog-title"
-
-                    fullScreen
+                    maxWidth="xs"
 
                 >
                     <DialogTitle id="responsive-dialog-title">Úprava Směny</DialogTitle>
@@ -119,13 +118,13 @@ class Usermanager extends React.Component {
 
                         <DialogContentText>
                             Nový uživatel
-                            <br/> <br/> <br/>
+
                         </DialogContentText>
 
 
                         <Grid container spacing={16}>
-                            <Grid item xs={4}>
-                                <FormControl className={classes.formControl} variant="outlined">
+                            <Grid item xs={12} alignContent={"center"}>
+                                <FormControl fullWidth className={classes.formControl} variant="outlined">
                                     <InputLabel htmlFor="adornment-amount">Jméno</InputLabel>
                                     <Input
                                         id="adornment-amount"
@@ -133,11 +132,12 @@ class Usermanager extends React.Component {
                                         value={this.state.edituser.firstname || ""}
                                         label="Jméno"
                                         onChange={this.handleDialogChange('firstname')}
+
                                     />
                                 </FormControl>
                             </Grid>
-                            <Grid item xs={4}>
-                                <FormControl className={classes.formControl} variant="outlined">
+                            <Grid item xs={12}>
+                                <FormControl fullWidth className={classes.formControl} variant="outlined">
                                     <InputLabel htmlFor="adornment-amount">Příjmení</InputLabel>
                                     <Input
                                         id="adornment-amount"
@@ -148,8 +148,8 @@ class Usermanager extends React.Component {
                                     />
                                 </FormControl>
                             </Grid>
-                            <Grid item xs={4}>
-                                <FormControl className={classes.formControl} variant="outlined">
+                            <Grid item xs={12}>
+                                <FormControl fullWidth className={classes.formControl} variant="outlined">
                                     <InputLabel htmlFor="adornment-amount">Email</InputLabel>
                                     <Input
                                         id="adornment-amount"
@@ -160,11 +160,9 @@ class Usermanager extends React.Component {
                                     />
                                 </FormControl>
                             </Grid>
-                        </Grid>
-                        <br/>
-                        <Grid container spacing={16}>
-                            <Grid item xs={4}>
-                                <FormControl className={classes.formControl} variant="outlined">
+
+                            <Grid item xs={12}>
+                                <FormControl fullWidth className={classes.formControl} variant="outlined">
                                     <InputLabel htmlFor="adornment-amount">Uvazek</InputLabel>
                                     <Input
                                         id="adornment-amount"
@@ -179,16 +177,12 @@ class Usermanager extends React.Component {
 
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={this.handleSubmit} color="secondary">
+                        <Button variant="contained" onClick={this.handleSubmit} color="secondary">
                             Uložit
                         </Button>
 
-                        <Button onClick={this.handleClose} color="primary">
+                        <Button variant="contained" onClick={this.handleClose} color="primary">
                             Zrušit
-                        </Button>
-
-                        <Button onClick={this.handleClose}>
-                            Odstranit
                         </Button>
                     </DialogActions>
                 </Dialog>

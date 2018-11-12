@@ -1,5 +1,5 @@
 import React from 'react';
-
+import 'typeface-roboto';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 
 const styles = theme => ({
@@ -21,6 +21,9 @@ const styles = theme => ({
     root: {
         textAlign: 'center',
         paddingTop: theme.spacing.unit,
+fontFamily:"Roboto",
+            display: 'center',
+
     },
     menuButton: {
         marginLeft: -12,
@@ -75,8 +78,13 @@ const styles = theme => ({
                 width: 200,
             },
         },
-    }
+    },
 
+    formControl: {
+
+        padding: theme.spacing.unit * 2,
+
+    },
 });
 
 export default styles;

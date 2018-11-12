@@ -24,6 +24,10 @@ import FormControl from '@material-ui/core/FormControl';
 import Usertable from "../usertable/Usertable";
 import Autocomplete from "../autocomplete/Autocomplete";
 import update from 'react-addons-update';
+import 'typeface-roboto';
+import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop'
+
+import 'react-big-calendar/lib/addons/dragAndDrop/styles.less'
 
 import "../../functions";
 
@@ -33,7 +37,7 @@ let ExampleControlSlot = createSlot();
 const localizer = BigCalendar.momentLocalizer(moment);
 
 // the dummy calendar data
-
+const DragAndDropCalendar = withDragAndDrop(BigCalendar)
 
 class Cal extends Component {
 
@@ -44,7 +48,6 @@ class Cal extends Component {
         //here we create the filtering based on given props
 
         // props.value = props.value || '';
-
 
         this.state = {
             events: events,
@@ -63,9 +66,9 @@ class Cal extends Component {
 
         };
 
-
-
         if (this.props.bell === true) this.bell = true;
+
+        this.moveEvent = this.moveEvent.bind(this);
 
     };
 
@@ -176,6 +179,46 @@ class Cal extends Component {
             };
         });
     };
+    resizeEvent = ({ event, start, end }) => {
+
+
+        const events  = this.state.events;
+
+        const nextEvents = events.map(existingEvent => {
+            return existingEvent.id === event.id
+                ? { ...existingEvent, start, end }
+                : existingEvent
+        });
+
+        this.setState({
+            events: nextEvents,
+        });
+
+        alert(`${event.title} was resized to ${start}-${end}`)
+    }
+    moveEvent({ event, start, end, isAllDay: droppedOnAllDaySlot }) {
+        const  events  = this.state.events;
+
+        const idx = events.indexOf(event)
+        let allDay = event.allDay
+
+        if (!event.allDay && droppedOnAllDaySlot) {
+            allDay = true
+        } else if (event.allDay && !droppedOnAllDaySlot) {
+            allDay = false
+        }
+
+        const updatedEvent = { ...event, start, end, allDay }
+
+        const nextEvents = [...events]
+        nextEvents.splice(idx, 1, updatedEvent)
+
+        this.setState({
+            events: nextEvents,
+        })
+
+        // alert(`${event.title} was dropped onto ${updatedEvent.start}`)
+    }
 
     render() {
 
@@ -229,8 +272,10 @@ class Cal extends Component {
 
                 </ExampleControlSlot.Entry>
 
-                {this.props.auth === "manager" ? <BigCalendar
+                {this.props.auth === "manager" ? <DragAndDropCalendar
+
                         selectable
+                        resizable
                         localizer={localizer}
                         events={showEvents}
                         defaultView={BigCalendar.Views.WEEK}
@@ -239,6 +284,8 @@ class Cal extends Component {
                         onSelectEvent={event => this.handleClickOpen(event)}
                         onSelectSlot={this.handleSelect}
                         style={{height: "100vh"}}
+                        onEventDrop={this.moveEvent}
+                        onEventResize={this.resizeEvent}
                     />
                     : <BigCalendar
                         selectable
@@ -252,13 +299,14 @@ class Cal extends Component {
 
                 }
 
+
+
                 <Dialog
                     open={this.state.isEditModalOpen}
                     onClose={this.handleClose}
                     aria-labelledby="responsive-dialog-title"
 
-                    fullScreen
-
+                    maxWidth="md"
                 >
                     <DialogTitle id="responsive-dialog-title">Úprava Směny</DialogTitle>
                     <DialogContent>
@@ -270,9 +318,9 @@ class Cal extends Component {
                         </DialogContentText>
 
 
-                        <Grid container spacing={12}>
-                            <Grid item xs={4}>
-                                <FormControl className={classes.formControl} variant="outlined">
+                        <Grid container spacing={16} alignItems={"flex"}>
+                            <Grid item md={4} xs={12}>
+                                <FormControl fullWidth className={classes.formControl} variant="outlined">
                                     <InputLabel htmlFor="adornment-amount">Od</InputLabel>
                                     <Input
                                         id="adornment-amount"
@@ -283,8 +331,8 @@ class Cal extends Component {
                                     />
                                 </FormControl>
                             </Grid>
-                            <Grid item xs={4}>
-                                <FormControl className={classes.formControl} variant="outlined">
+                            <Grid item md={4} xs={12}>
+                                <FormControl fullWidth className={classes.formControl} variant="outlined">
                                     <InputLabel htmlFor="adornment-amount">Do</InputLabel>
                                     <Input
                                         id="adornment-amount"
@@ -295,8 +343,8 @@ class Cal extends Component {
                                     />
                                 </FormControl>
                             </Grid>
-                            <Grid item xs={4}>
-                                <FormControl className={classes.formControl} variant="outlined">
+                            <Grid item md={4} xs={12}>
+                                <FormControl fullWidth className={classes.formControl} variant="outlined">
                                     <InputLabel htmlFor="adornment-amount">Kapacita</InputLabel>
                                     <Input
                                         autoFocus
@@ -311,8 +359,8 @@ class Cal extends Component {
                             </Grid>
                         </Grid>
                         <br/>
-                        <Grid container spacing={12}>
-                            <Grid item xs={12}>
+                        <Grid container spacing={12} alignContent={"center"}>
+                            <Grid item md={12} xs={12}>
                                 <FormControl fullWidth className={classes.formControl} variant="outlined">
                                     <InputLabel htmlFor="adornment-amount"></InputLabel>
                                     <TextField
@@ -331,7 +379,7 @@ class Cal extends Component {
                         </Grid>
 
                         <Grid container spacing={12}>
-                            <Grid item xs={8}>
+                            <Grid item md={10} xs={8}>
 
                                 <Autocomplete
                                     value={this.state.searchEmployee}
@@ -344,14 +392,14 @@ class Cal extends Component {
                                     options={options}
                                 />
                             </Grid>
-                            <Grid item xs={4}>
-                                <Button onClick={this.handleAdd}>
-                                    Přidat uživatele
+                            <Grid item md={2} xs={4}>
+                                <Button variant="contained" className={classes.buttons} fullWidth onClick={this.handleAdd}>
+                                    Přidat
                                 </Button>
-
                             </Grid>
+
                         </Grid>
-                        <Grid container spacing={12}>
+                        <Grid container spacing={12} alignContent={"center"}>
                             <Grid item xs={12}>
                                 <Usertable data={this.state.dialoginfo.employees || []}/>
                             </Grid>
@@ -359,15 +407,15 @@ class Cal extends Component {
 
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={this.handleSubmit} color="secondary">
+                        <Button variant="contained" onClick={this.handleSubmit} color="secondary">
                             Uložit
                         </Button>
 
-                        <Button onClick={this.handleClose} color="primary">
+                        <Button variant="contained" onClick={this.handleClose} color="primary">
                             Zrušit
                         </Button>
 
-                        <Button onClick={this.handleClose}>
+                        <Button variant="contained" onClick={this.handleClose}>
                             Odstranit
                         </Button>
                     </DialogActions>
