@@ -60,7 +60,7 @@ class Home extends React.Component {
 
                             <Title title="Přehled" />
 
-                <Grid container spacing={12}>
+                <Grid container spacing={16}>
 
                     <Grid item xs={12} sm={6}>
 

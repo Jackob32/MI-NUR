@@ -1,11 +1,10 @@
-
 import React, {Component} from "react";
 import BigCalendar from "react-big-calendar";
 // the moment library for getting correct time and date
 import moment from "moment";
 import createSlot from 'react-tackle-box/Slot'
 import "./Cal.css";
-import "react-big-calendar/lib/css/react-big-calendar.css";
+
 import withRoot from "../../withRoot";
 import styles from "../../theme";
 import {withStyles} from '@material-ui/core/styles';
@@ -24,16 +23,24 @@ import {events, rows} from "../../data"
 import FormControl from '@material-ui/core/FormControl';
 import Usertable from "../usertable/Usertable";
 import Autocomplete from "../autocomplete/Autocomplete";
+import Typography from "@material-ui/core/Typography";
+import Paper from "@material-ui/core/Paper";
+import red from '@material-ui/core/colors/red';
+import green from '@material-ui/core/colors/green';
+import orange from '@material-ui/core/colors/orange';
+
+import Toolbar from "./Toolbar";
+import Event from "./Event";
 import update from 'react-addons-update';
 import 'typeface-roboto';
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
-import "react-big-calendar/lib/css/react-big-calendar.css";
 
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop'
 
 import "../../functions";
 
 require('moment/locale/cs');
+
 moment.locale('cs');
 
 
@@ -45,48 +52,8 @@ const localizer = BigCalendar.momentLocalizer(moment);
 // the dummy calendar data
 const DragAndDropCalendar = withDragAndDrop(BigCalendar)
 
+
 class Cal extends Component {
-
-    constructor(props) {
-
-        super(props);
-
-        //here we create the filtering based on given props
-
-        // props.value = props.value || '';
-
-        this.state = {
-            events: events,
-            dialoginfo: {
-                id: 0,
-                title: 'Volne',
-                start: new Date(new Date().setHours(new Date().getHours() - 3)),
-                end: new Date(new Date().setHours(new Date().getHours() + 3)),
-                capacity: 5,
-                note: "",
-                employees: []
-            },
-            isAddModalOpen: false,
-            isEditModalOpen: false,
-            searchEmployee: "",
-
-        };
-
-        if (this.props.bell === true) this.bell = true;
-
-        this.moveEvent = this.moveEvent.bind(this);
-
-    };
-
-    static getDefaultProps() {
-        return {
-            freeshifts: true,
-            partialshifts: true,
-            fullshifts: true,
-            searchEmployee: ""
-        };
-    }
-
 
     handleSelect = ({start, end, slots, action}) => {
         if (this.props.auth && this.props.auth === "manager") {
@@ -99,7 +66,7 @@ class Cal extends Component {
                     events: [
                         ...this.state.events,
                         {
-                            id,
+                            id: this.state.idcnt + 1,
                             start,
                             end,
                             title,
@@ -108,6 +75,7 @@ class Cal extends Component {
                             employees: [],
                         },
                     ],
+                    idcnt: this.state.idcnt + 1,
                     isAddModalOpen: false,
                     isEditModalOpen: false,
                 })
@@ -115,22 +83,20 @@ class Cal extends Component {
         }
     };
     handleClickOpen = (e) => {
-        if (this.props.auth && this.props.auth === "manager")
-            this.setState({isEditModalOpen: true, dialoginfo: this.state.events[e.id]});
 
+        let index = this.state.events.findIndex(x => x.id === e.id);
 
+        if (this.props.auth && this.props.auth === "manager") {
+            let newdialoginfo = this.state.events[index];
+
+            newdialoginfo.id = e.id;
+            this.setState({isEditModalOpen: true, dialoginfo: newdialoginfo});
+        }
     };
     handleClose = () => {
         this.setState({isEditModalOpen: false});
     };
-    toggleAddModal = event => {
-        if (!this.state.isEditModalOpen) {
-            this.setState({
-                currentEvent: event,
-                isAddModalOpen: !this.state.isAddModalOpen,
-            });
-        }
-    };
+
     handleSearchChange = (value) => {
         this.setState({
             searchEmployee: value,
@@ -151,59 +117,98 @@ class Cal extends Component {
     };
     handleSubmit = () => {
 
-        if (!this.state.dialoginfo.id) this.state.dialoginfo.id = this.state.events.length;
+        let index = this.state.events.findIndex(x => x.id === this.state.dialoginfo.id);
 
         this.setState({
-            events: update(this.state.events, {[this.state.dialoginfo.id]: {$set: this.state.dialoginfo}})
+            events: update(this.state.events, {[index]: {$set: this.state.dialoginfo}})
         });
 
         this.handleClose();
     };
-    toggleEditModal = event => {
-        if (!this.state.isAddModalOpen) {
-            this.setState({
-                currentEvent: event,
-                isEditModalOpen: !this.state.isEditModalOpen,
-            });
-        }
+    handleDelete = () => {
+
+        let index = this.state.events.findIndex(x => x.id === this.state.dialoginfo.id);
+
+        let array = [...this.state.events]; // make a separate copy of the array
+        array.splice(index, 1);
+        this.handleClose();
+        this.setState({
+            events: array,
+        });
+
     };
+
     handleDialogChange = prop => event => {
-
-
         //  console.log(event.target.type);
         // console.log(event.target.value);
         let val = event.target.value;
         if (event.target.type === "datetime-local") {
-            console.log(val);
+          //  console.log(val);
             val = new Date(val);
 
         }
-
         this.setState(prevState => {
             return {
                 [prop]: prevState.dialoginfo[prop] = val
             };
         });
     };
-    resizeEvent = ({ event, start, end }) => {
+    resizeEvent = ({event, start, end}) => {
 
-
-        const events  = this.state.events;
-
+        const events = this.state.events;
         const nextEvents = events.map(existingEvent => {
             return existingEvent.id === event.id
-                ? { ...existingEvent, start, end }
+                ? {...existingEvent, start, end}
                 : existingEvent
         });
-
         this.setState({
             events: nextEvents,
         });
 
-       // alert(`${event.title} was resized to ${start}-${end}`)
+        // alert(`${event.title} was resized to ${start}-${end}`)
     }
-    moveEvent({ event, start, end, isAllDay: droppedOnAllDaySlot }) {
-        const  events  = this.state.events;
+
+    constructor(props) {
+
+        super(props);
+
+        //here we create the filtering based on given props
+
+        // props.value = props.value || '';
+
+        this.state = {
+            events: events,
+            dialoginfo: {
+                id: 0,
+                title: 'Volne',
+                start: new Date(new Date().setHours(new Date().getHours() - 3)),
+                end: new Date(new Date().setHours(new Date().getHours() + 3)),
+                capacity: 5,
+                note: "",
+                employees: []
+            },
+            idcnt: events.length,
+            isAddModalOpen: false,
+            isEditModalOpen: false,
+            searchEmployee: "",
+
+        };
+
+        if (this.props.bell === true) this.bell = true;
+
+    };
+
+    EventAgenda({event}) {
+        return (
+            <span>
+      <em style={{color: 'magenta'}}>{event.title}</em>
+      <p>{event.desc}</p>
+    </span>
+        )
+    }
+
+    moveEvent=({event, start, end, isAllDay: droppedOnAllDaySlot})=> {
+        const events = this.state.events;
 
         const idx = events.indexOf(event)
         let allDay = event.allDay
@@ -214,7 +219,7 @@ class Cal extends Component {
             allDay = false
         }
 
-        const updatedEvent = { ...event, start, end, allDay }
+        const updatedEvent = {...event, start, end, allDay}
 
         const nextEvents = [...events]
         nextEvents.splice(idx, 1, updatedEvent)
@@ -228,22 +233,24 @@ class Cal extends Component {
 
     render() {
 
-
         const {classes} = this.props;
         let showEvents = [];
 
-        if (this.props.freeshifts || (this.props.auth && this.props.auth === "employee")) {
+        if (this.props.freeshifts && (this.props.auth && this.props.auth === "manager")) {
             showEvents = showEvents.concat(this.state.events.filter(event => event.employees.length === 0));
+        }else if(this.props.freeshifts && (this.props.auth && this.props.auth === "employee")){
+            showEvents = showEvents.concat(this.state.events.filter(event => event.capacity > event.employees.length));
         }
-        if (this.props.partialshifts || (this.props.auth && this.props.auth === "employee")) {
+
+        if (this.props.partialshifts && (this.props.auth && this.props.auth === "manager")) {
             showEvents = showEvents.concat(this.state.events.filter(event => event.capacity > event.employees.length && event.employees.length !== 0));
         }
 
-        if (this.props.fullshifts || (this.props.auth && this.props.auth === "employee")) {
+        if (this.props.fullshifts) {
             showEvents = showEvents.concat(this.state.events.filter(event => event.capacity <= event.employees.length));
         }
 
-        console.log(showEvents);
+       // console.log(showEvents);
 
         if (this.props.searchEmployee !== "") {
             showEvents = showEvents.filter(
@@ -254,7 +261,6 @@ class Cal extends Component {
                             employee.lastname.includes(this.props.searchEmployee)
                             ||
                             (employee.firstname + " " + employee.lastname).includes(this.props.searchEmployee)
-
                             ||
                             employee.email.includes(this.props.searchEmployee);
                     }
@@ -266,9 +272,10 @@ class Cal extends Component {
             value: user,
             label: user.firstname + " " + user.lastname,
         }));
-        console.log("this.state");
-        console.log(this.state);
+        //console.log("this.state");
+       // console.log(this.state);
 
+        let allViews = Object.keys(BigCalendar.Views).map(k => BigCalendar.Views[k])
 
         return (
             <div className="App">
@@ -292,20 +299,36 @@ class Cal extends Component {
                         style={{height: "100vh"}}
                         onEventDrop={this.moveEvent}
                         onEventResize={this.resizeEvent}
+                        rtl
+                        showMultiDayTimes
+                        views={allViews}
+                        components={{
+                            event: Event,
+                            toolbar: Toolbar,
+                            agenda: {
+                                event: this.EventAgenda,
+                            },
+                        }}
+
                     />
                     : <BigCalendar
                         culture={"cs-CZ"}
-                        selectable
                         localizer={localizer}
                         events={showEvents}
                         defaultView={BigCalendar.Views.WEEK}
                         scrollToTime={new Date(1970, 1, 1, 6)}
                         defaultDate={new Date()}
                         style={{height: "100vh"}}
+                        components={{
+                            event: Event,
+                            toolbar: Toolbar,
+                            agenda: {
+                                event: this.EventAgenda,
+                            },
+                        }}
                     />
 
                 }
-
 
 
                 <Dialog
@@ -400,7 +423,8 @@ class Cal extends Component {
                                 />
                             </Grid>
                             <Grid item md={2} xs={4}>
-                                <Button variant="contained" className={classes.buttons} fullWidth onClick={this.handleAdd}>
+                                <Button variant="contained" className={classes.buttons} fullWidth
+                                        onClick={this.handleAdd}>
                                     Přidat
                                 </Button>
                             </Grid>
@@ -422,7 +446,7 @@ class Cal extends Component {
                             Zrušit
                         </Button>
 
-                        <Button variant="contained" onClick={this.handleClose}>
+                        <Button variant="contained" onClick={this.handleDelete}>
                             Odstranit
                         </Button>
                     </DialogActions>

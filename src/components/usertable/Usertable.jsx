@@ -18,6 +18,9 @@ import {Link} from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import TableHead from '@material-ui/core/TableHead';
 import {events} from "../../data";
+import ArrowBackIosSharp from "@material-ui/core/SvgIcon/SvgIcon";
+import Typography from "@material-ui/core/Typography/Typography";
+import Delete from '@material-ui/icons/Delete';
 
 
 
@@ -182,8 +185,11 @@ class Usertable extends React.Component {
                                         <TableCell component="th" scope="row">
                                             {row.email}
                                         </TableCell>
-
-
+                                        <TableCell component="th" scope="row">
+                                        <IconButton color="primary" >
+                                            <Delete/>
+                                        </IconButton>
+                                    </TableCell>
                                     </TableRow>
                                 );
                             })}

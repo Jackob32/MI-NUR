@@ -1,6 +1,9 @@
 import React from 'react';
 import 'typeface-roboto';
 import { fade } from '@material-ui/core/styles/colorManipulator';
+import red from '@material-ui/core/colors/red';
+import green from '@material-ui/core/colors/green';
+import orange from '@material-ui/core/colors/orange';
 
 const styles = theme => ({
 
@@ -31,6 +34,10 @@ fontFamily:"Roboto",
     },
     grow: {
         flexGrow: 1,
+    },
+
+    growlittle: {
+        flexGrow: 0.3,
     },
     title: {
         display: 'none',
@@ -85,6 +92,42 @@ fontFamily:"Roboto",
         padding: theme.spacing.unit * 2,
 
     },
+    avatar: {
+        fontSize: '75%',
+        width: 25,
+        marginTop: -4,
+        height: 25,
+    },
+
+    greenAvatar: {
+        fontSize: '75%',
+        width: 25,
+        marginTop: -4,
+        height: 25,
+        color: '#fff',
+        backgroundColor: green[500],
+    },
+    orangeAvatar: {
+        fontSize: '75%',
+        width: 25,
+        marginTop: -4,
+        height: 25,
+        color: '#fff',
+        backgroundColor: orange[500],
+    },
+    redAvatar: {
+        fontSize: '75%',
+        width: 25,
+        marginTop: -4,
+        height: 25,
+        color: '#fff',
+        backgroundColor: red[500],
+    },
+        bigAvatar: {
+        width: 60,
+        height: 60,
+    },
+
 });
 
 export default styles;
