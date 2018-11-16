@@ -1,13 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import {withStyles} from '@material-ui/core/styles';
 import Title from '../../../components/title/Title';
 import Usertable from '../../../components/usertable/Usertable';
-import {events, rows} from '../../../data';
-
-import withRoot from '../../../withRoot';
+import {rows} from '../../../data';
 import styles from '../../../theme';
-import {Link} from "react-router-dom";
 import Button from "@material-ui/core/Button/Button";
 import Dialog from "@material-ui/core/Dialog/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle/DialogTitle";
@@ -17,10 +14,7 @@ import Grid from "@material-ui/core/Grid/Grid";
 import FormControl from "@material-ui/core/FormControl/FormControl";
 import InputLabel from "@material-ui/core/InputLabel/InputLabel";
 import Input from "@material-ui/core/Input/Input";
-import TextField from "@material-ui/core/TextField/TextField";
-import Autocomplete from "../../../components/autocomplete/Autocomplete";
 import DialogActions from "@material-ui/core/DialogActions/DialogActions";
-import update from "react-addons-update";
 
 const actionsStyles = theme => ({
     root: {
@@ -32,30 +26,6 @@ const actionsStyles = theme => ({
 
 class Usermanager extends React.Component {
 
-    constructor(props) {
-
-        super(props);
-
-        //here we create the filtering based on given props
-
-        // props.value = props.value || '';
-
-        this.state = {
-            rows: rows,
-            isAddModalOpen: false,
-            isEditModalOpen: false,
-        edituser:{
-            id:rows.length,
-            firstname: "",
-                lastname: "",
-            worktime: 0,
-            thisweekworktime: 0,
-            email: ""
-        },
-        };
-        if (this.props.bell === true) this.bell = true;
-    };
-
     handleClickOpen = (e) => {
         this.setState({isEditModalOpen: true});
     };
@@ -65,9 +35,9 @@ class Usermanager extends React.Component {
     handleSubmit = () => {
 
         this.setState({
-            rows: [...this.state.rows,this.state.edituser],
-            edituser:{
-                id:this.state.rows.length+1,
+            rows: [...this.state.rows, this.state.edituser],
+            edituser: {
+                id: this.state.rows.length + 1,
                 firstname: "",
                 lastname: "",
                 worktime: 0,
@@ -78,6 +48,18 @@ class Usermanager extends React.Component {
         console.log(this.state);
 
         this.handleClose();
+    };
+
+    handleDelete = (x) => {
+
+            let index = this.state.rows.findIndex(item => item.id === x);
+
+            let array = [...this.state.rows]; // make a separate copy of the array
+            array.splice(index, 1);
+            this.setState({
+                rows: array,
+            });
+
     };
 
     handleDialogChange = prop => event => {
@@ -91,19 +73,44 @@ class Usermanager extends React.Component {
 
         console.log(this.state);
     };
+
+    constructor(props) {
+
+        super(props);
+
+        //here we create the filtering based on given props
+
+        // props.value = props.value || '';
+
+        this.state = {
+            rows: rows,
+            isAddModalOpen: false,
+            isEditModalOpen: false,
+            edituser: {
+                id: rows.length,
+                firstname: "",
+                lastname: "",
+                worktime: 0,
+                thisweekworktime: 0,
+                email: ""
+            },
+        };
+        if (this.props.bell === true) this.bell = true;
+    };
+
     render() {
-        const { classes } = this.props;
-      return (
+        const {classes} = this.props;
+        return (
 
             <div>
 
-                <Title title="Správa Uživatelů" />
+                <Title title="Správa Uživatelů"/>
 
-                    <Button variant="contained" onClick={this.handleClickOpen}  color="primary">
-                        Nový uživatel
-                    </Button>
+                <Button variant="contained" onClick={this.handleClickOpen} color="primary">
+                    Nový uživatel
+                </Button>
 
-<Usertable data={this.state.rows}/>
+                <Usertable data={this.state.rows} onDelete={this.handleDelete} />
 
                 <Dialog
                     open={this.state.isEditModalOpen}

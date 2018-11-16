@@ -28,7 +28,8 @@ import Paper from "@material-ui/core/Paper";
 import red from '@material-ui/core/colors/red';
 import green from '@material-ui/core/colors/green';
 import orange from '@material-ui/core/colors/orange';
-
+import grey from '@material-ui/core/colors/grey';
+import blue from '@material-ui/core/colors/blue';
 import Toolbar from "./Toolbar";
 import Event from "./Event";
 import update from 'react-addons-update';
@@ -125,6 +126,21 @@ class Cal extends Component {
 
         this.handleClose();
     };
+
+    handleUserDelete = (x) => {
+
+        let index = this.state.dialoginfo.employees.findIndex(item => item.id === x);
+
+        let array = [...this.state.dialoginfo.employees];
+        array.splice(index, 1);
+        this.setState({
+            dialoginfo: {
+                ...this.state.dialoginfo,
+                employees: array,
+            }
+        });
+    };
+
     handleDelete = () => {
 
         let index = this.state.events.findIndex(x => x.id === this.state.dialoginfo.id);
@@ -137,6 +153,31 @@ class Cal extends Component {
         });
 
     };
+
+    addUserToEvent = (e) => {
+
+        let index = this.state.events.findIndex(x => x.id === e.id);
+        let userid = rows.findIndex(x => x.email === "Pepa.Novak@gmail.com");
+
+        let newevent=this.state.events[index];
+
+        if (e.employees.filter(e => e.email === 'Pepa.Novak@gmail.com').length > 0) {
+            let userid = newevent.employees.findIndex(x => x.email === "Pepa.Novak@gmail.com");
+            newevent.employees.splice(userid,1);
+
+            this.setState({
+                events: update(this.state.events, {[index]: {$set: newevent}})
+            });
+
+        }else if(e.employees.length<e.capacity){
+
+            newevent.employees.push(rows[userid]);
+
+            this.setState({
+                events: update(this.state.events, {[index]: {$set: newevent}})
+            });
+        }
+    }
 
     handleDialogChange = prop => event => {
         //  console.log(event.target.type);
@@ -201,12 +242,56 @@ class Cal extends Component {
     EventAgenda({event}) {
         return (
             <span>
-      <em style={{color: 'magenta'}}>{event.title}</em>
-      <p>{event.desc}</p>
+      <strong style={{color: 'white'}}>{event.title}</strong>
+                {event.note !== "" &&
+                <p style={{borderTop: "1px solid white"}}>{event.note}</p>
+                }
     </span>
         )
     }
+    eventStyleGetter=(event, start, end, isSelected)=> {
 
+        var backgroundColor = '#' + event.hexColor;
+
+        if(this.props.auth === "manager") {
+
+            if (event.employees.length === event.capacity) {
+                backgroundColor = green[500];
+            }
+            if (event.employees.length === 0 || event.employees.length > event.capacity) {
+                backgroundColor = red[500];
+            }
+            if (event.employees.length < event.capacity && event.employees.length !== 0) {
+                backgroundColor = orange[500];
+            }
+        }else{
+            backgroundColor = blue[500];
+            if(isSelected)
+                backgroundColor = blue[700];
+            if (event.employees.length >= event.capacity) {
+                backgroundColor = red[500];
+                if(isSelected)
+                backgroundColor = red[700];
+            }
+            if (event.employees.filter(e => e.email === 'Pepa.Novak@gmail.com').length > 0) {
+                backgroundColor = green[500];
+                if(isSelected)
+                    backgroundColor = green[700];
+            }
+
+        }
+
+            let style = {
+                backgroundColor: backgroundColor,
+                borderRadius: '5px',
+                color: 'white',
+                border: '6px',
+            };
+
+        return {
+            style: style
+        };
+    }
     moveEvent=({event, start, end, isAllDay: droppedOnAllDaySlot})=> {
         const events = this.state.events;
 
@@ -300,8 +385,10 @@ class Cal extends Component {
                         onEventDrop={this.moveEvent}
                         onEventResize={this.resizeEvent}
                         rtl
+                        longPressThreshold={0}
                         showMultiDayTimes
                         views={allViews}
+                        eventPropGetter={(this.eventStyleGetter)}
                         components={{
                             event: Event,
                             toolbar: Toolbar,
@@ -319,6 +406,8 @@ class Cal extends Component {
                         scrollToTime={new Date(1970, 1, 1, 6)}
                         defaultDate={new Date()}
                         style={{height: "100vh"}}
+                        eventPropGetter={(this.eventStyleGetter)}
+                        onSelectEvent={this.addUserToEvent}
                         components={{
                             event: Event,
                             toolbar: Toolbar,
@@ -432,7 +521,7 @@ class Cal extends Component {
                         </Grid>
                         <Grid container spacing={12} alignContent={"center"}>
                             <Grid item xs={12}>
-                                <Usertable data={this.state.dialoginfo.employees || []}/>
+                                <Usertable data={this.state.dialoginfo.employees || []} onDelete={this.handleUserDelete}/>
                             </Grid>
                         </Grid>
 

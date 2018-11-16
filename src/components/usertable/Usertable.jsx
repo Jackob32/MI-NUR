@@ -21,6 +21,7 @@ import {events} from "../../data";
 import ArrowBackIosSharp from "@material-ui/core/SvgIcon/SvgIcon";
 import Typography from "@material-ui/core/Typography/Typography";
 import Delete from '@material-ui/icons/Delete';
+import DialogActions from "@material-ui/core/DialogActions/DialogActions";
 
 
 
@@ -137,7 +138,6 @@ class Usertable extends React.Component {
     handleChangeRowsPerPage = event => {
         this.setState({ rowsPerPage: event.target.value });
     };
-
     render() {
         const { classes } = this.props;
         const { rowsPerPage, page } = this.state;
@@ -186,7 +186,10 @@ class Usertable extends React.Component {
                                             {row.email}
                                         </TableCell>
                                         <TableCell component="th" scope="row">
-                                        <IconButton color="primary" >
+
+                                        <IconButton
+                                            color="primary"
+                                            onClick={() => this.props.onDelete(row.id)}>
                                             <Delete/>
                                         </IconButton>
                                     </TableCell>
