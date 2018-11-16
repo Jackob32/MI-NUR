@@ -166,6 +166,7 @@ class Usertable extends React.Component {
                                 <TableCell numeric>
                                     Úvazek</TableCell>
                                 <TableCell>Email</TableCell>
+
                                 <TableCell>Akce</TableCell>
                             </TableRow>
                         </TableHead>

@@ -8,9 +8,9 @@ function random(x){
 }
 
 let counter = -1;
-function createData(firstname, lastname, ex, email, phone) {
+function createData(firstname, lastname, ex, email, phone,type="employee") {
     counter += 1;
-    return { id: counter, firstname,lastname,worktime:random(5)*5,email,phone};
+    return { id: counter, firstname,lastname,worktime:random(5)*5,email,phone,type};
 
 }
 

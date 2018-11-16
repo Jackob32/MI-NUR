@@ -15,7 +15,7 @@ import FormControl from "@material-ui/core/FormControl/FormControl";
 import InputLabel from "@material-ui/core/InputLabel/InputLabel";
 import Input from "@material-ui/core/Input/Input";
 import DialogActions from "@material-ui/core/DialogActions/DialogActions";
-
+import Select from '@material-ui/core/Select';
 const actionsStyles = theme => ({
     root: {
         flexShrink: 0,
@@ -167,7 +167,23 @@ class Usermanager extends React.Component {
                                     />
                                 </FormControl>
                             </Grid>
+                            <Grid item xs={12}>
+                                <FormControl fullWidth className={classes.formControl} variant="outlined">
+                                    <InputLabel htmlFor="adornment-amount">Typ Uživatele Vedoucí-Zaměstnanec</InputLabel>
+                                    <InputLabel htmlFor="type">Typ Uživatele Vedoucí-Zaměstnanec</InputLabel>
+                                    <Select
+                                        native
+                                        value={this.state.edituser.type || ""}
+                                        onChange={this.handleDialogChange('type')}
+                                        label="type"
+                                    >
 
+                                        <option value={"employee"}>Zaměstnanec</option>
+                                        <option value={"manager"}>Vedoucí</option>
+                                    </Select>
+
+                                </FormControl>
+                            </Grid>
                             <Grid item xs={12}>
                                 <FormControl fullWidth className={classes.formControl} variant="outlined">
                                     <InputLabel htmlFor="adornment-amount">Uvazek</InputLabel>

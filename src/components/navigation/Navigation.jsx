@@ -199,7 +199,7 @@ if(this.props.bell===true) this.bell=true;
 
                         <div className={classes.sectionDesktop}>
 
-                            {this.bell &&
+                            {this.bell && false &&
                                 <div>
 
                             <IconButton color="inherit">
