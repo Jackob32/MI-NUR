@@ -4,10 +4,7 @@
     <list default="true" id="140ca68a-66a6-4314-a244-8355396e61da" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/calendar/Calendar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/calendar/Calendar.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/usertable/Usertable.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/usertable/Usertable.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/data.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/theme.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/theme.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/manager/pages/usermanager.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/manager/pages/usermanager.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/calendar/Event.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/calendar/Event.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -57,18 +54,18 @@
         <counts>
           <entry key="css" value="274" />
           <entry key="html" value="1" />
-          <entry key="js" value="3461" />
-          <entry key="jsx" value="1943" />
-          <entry key="txt" value="140" />
+          <entry key="js" value="3486" />
+          <entry key="jsx" value="2064" />
+          <entry key="txt" value="161" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="CSS" value="274" />
           <entry key="HTML" value="1" />
-          <entry key="JSX Harmony" value="1943" />
-          <entry key="JavaScript" value="3461" />
-          <entry key="PLAIN_TEXT" value="140" />
+          <entry key="JSX Harmony" value="2064" />
+          <entry key="JavaScript" value="3486" />
+          <entry key="PLAIN_TEXT" value="161" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.js.language.service.starts">
@@ -83,8 +80,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/usertable/Usertable.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="264">
-              <caret line="191" column="88" lean-forward="true" selection-start-line="191" selection-start-column="88" selection-end-line="191" selection-end-column="88" />
+            <state relative-caret-position="216">
+              <caret line="193" column="53" lean-forward="true" selection-start-line="193" selection-start-column="53" selection-end-line="193" selection-end-column="53" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -95,8 +92,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/views/manager/pages/usermanager.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="94">
-              <caret line="54" column="25" selection-start-line="54" selection-start-column="25" selection-end-line="54" selection-end-column="25" />
+            <state relative-caret-position="204">
+              <caret line="27" lean-forward="true" selection-start-line="27" selection-end-line="27" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -104,15 +101,14 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/calendar/Calendar.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="236">
-              <caret line="178" column="9" lean-forward="true" selection-start-line="178" selection-start-column="9" selection-end-line="178" selection-end-column="9" />
+            <state relative-caret-position="223">
+              <caret line="443" column="42" lean-forward="true" selection-start-line="443" selection-start-column="42" selection-end-line="443" selection-end-column="42" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
                 <element signature="e#142#170#0" expanded="true" />
-                <element signature="e#10680#16829#0" />
               </folding>
             </state>
           </provider>
@@ -142,11 +138,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/calendar/Event.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="29" column="96" lean-forward="true" selection-start-line="29" selection-start-column="25" selection-end-line="29" selection-end-column="96" />
+            <state relative-caret-position="182">
+              <caret line="33" column="25" lean-forward="true" selection-start-line="33" selection-start-column="25" selection-end-line="33" selection-end-column="25" />
               <folding>
                 <element signature="e#83#118#0" expanded="true" />
               </folding>
@@ -182,7 +178,7 @@
         <entry file="file://$PROJECT_DIR$/src/components/navigation/Navigation.jsx">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="101">
-              <caret line="24" selection-start-line="24" selection-end-line="24" />
+              <caret line="201" column="46" selection-start-line="201" selection-start-column="46" selection-end-line="201" selection-end-column="46" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -194,7 +190,7 @@
         <entry file="file://$PROJECT_DIR$/src/data.jsx">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="85">
-              <caret line="38" column="82" lean-forward="true" selection-start-line="38" selection-start-column="82" selection-end-line="38" selection-end-column="82" />
+              <caret line="14" column="1" lean-forward="true" selection-start-line="14" selection-start-column="1" selection-end-line="14" selection-end-column="1" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -236,12 +232,12 @@
       <find>spacing={12}</find>
       <find>spacing={0}</find>
       <find>labe</find>
-      <find>map</find>
       <find>console</find>
       <find>gra</find>
       <find>gree</find>
       <find>colo</find>
       <find>User</find>
+      <find>map</find>
       <find>Add</find>
     </findStrings>
   </component>
@@ -268,13 +264,13 @@
         <option value="$PROJECT_DIR$/src/views/manager/pages/home.jsx" />
         <option value="$PROJECT_DIR$/src/views/employee/pages/home.jsx" />
         <option value="$PROJECT_DIR$/src/components/calendar/Cal.css" />
+        <option value="$PROJECT_DIR$/src/theme.jsx" />
         <option value="$PROJECT_DIR$/src/components/navigation/Navigation.jsx" />
-        <option value="$PROJECT_DIR$/src/components/calendar/Event.js" />
+        <option value="$PROJECT_DIR$/src/data.jsx" />
         <option value="$PROJECT_DIR$/src/components/usertable/Usertable.jsx" />
         <option value="$PROJECT_DIR$/src/views/manager/pages/usermanager.jsx" />
-        <option value="$PROJECT_DIR$/src/theme.jsx" />
-        <option value="$PROJECT_DIR$/src/data.jsx" />
         <option value="$PROJECT_DIR$/src/components/calendar/Calendar.js" />
+        <option value="$PROJECT_DIR$/src/components/calendar/Event.js" />
       </list>
     </option>
   </component>
@@ -399,7 +395,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1542383933722" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1542385588267" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -440,7 +436,7 @@
       <workItem from="1541549861912" duration="713000" />
       <workItem from="1541629077965" duration="8230000" />
       <workItem from="1541698348577" duration="59102000" />
-      <workItem from="1542302005044" duration="21929000" />
+      <workItem from="1542302005044" duration="23581000" />
     </task>
     <task id="LOCAL-00001" summary="Update user">
       <created>1541549950143</created>
@@ -491,17 +487,31 @@
       <option name="project" value="LOCAL" />
       <updated>1542324196999</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Employee updated">
+      <created>1542383976305</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1542383976305</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Employee updated">
+      <created>1542384756959</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1542384756959</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="90416000" />
+    <option name="totallyTimeSpent" value="92068000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1295" height="704" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18785425" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18785425" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -519,7 +529,7 @@
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="9" sideWeight="0.55060726" visible="true" weight="0.32924694" />
+      <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.55060726" visible="true" weight="0.32924694" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.4493927" side_tool="true" visible="true" weight="0.32924694" />
       <window_info anchor="bottom" id="TypeScript" order="11" sideWeight="0.49959514" weight="0.32924694" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
@@ -548,7 +558,8 @@
     <MESSAGE value="Resize Time" />
     <MESSAGE value="Rsize fix and Time local fix" />
     <MESSAGE value="Count People" />
-    <option name="LAST_COMMIT_MESSAGE" value="Count People" />
+    <MESSAGE value="Employee updated" />
+    <option name="LAST_COMMIT_MESSAGE" value="Employee updated" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/../mi-nur/ReactBurza/README.md">
@@ -971,16 +982,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/navigation/Navigation.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="101">
-          <caret line="24" selection-start-line="24" selection-end-line="24" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/calendar/Toolbar.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-260">
@@ -997,36 +998,6 @@
           <caret line="56" lean-forward="true" selection-start-line="56" selection-end-line="56" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/usertable/Usertable.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="191" column="88" lean-forward="true" selection-start-line="191" selection-start-column="88" selection-end-line="191" selection-end-column="88" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/manager/pages/usermanager.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="94">
-          <caret line="54" column="25" selection-start-line="54" selection-start-column="25" selection-end-line="54" selection-end-column="25" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/calendar/Event.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="29" column="96" lean-forward="true" selection-start-line="29" selection-start-column="25" selection-end-line="29" selection-end-column="96" />
-          <folding>
-            <element signature="e#83#118#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1051,10 +1022,40 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/navigation/Navigation.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="101">
+          <caret line="201" column="46" selection-start-line="201" selection-start-column="46" selection-end-line="201" selection-end-column="46" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/data.jsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
-          <caret line="38" column="82" lean-forward="true" selection-start-line="38" selection-start-column="82" selection-end-line="38" selection-end-column="82" />
+          <caret line="14" column="1" lean-forward="true" selection-start-line="14" selection-start-column="1" selection-end-line="14" selection-end-column="1" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/usertable/Usertable.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="193" column="53" lean-forward="true" selection-start-line="193" selection-start-column="53" selection-end-line="193" selection-end-column="53" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/manager/pages/usermanager.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="27" lean-forward="true" selection-start-line="27" selection-end-line="27" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
@@ -1063,12 +1064,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/calendar/Calendar.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="236">
-          <caret line="178" column="9" lean-forward="true" selection-start-line="178" selection-start-column="9" selection-end-line="178" selection-end-column="9" />
+        <state relative-caret-position="223">
+          <caret line="443" column="42" lean-forward="true" selection-start-line="443" selection-start-column="42" selection-end-line="443" selection-end-column="42" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
             <element signature="e#142#170#0" expanded="true" />
-            <element signature="e#10680#16829#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/calendar/Event.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="182">
+          <caret line="33" column="25" lean-forward="true" selection-start-line="33" selection-start-column="25" selection-end-line="33" selection-end-column="25" />
+          <folding>
+            <element signature="e#83#118#0" expanded="true" />
           </folding>
         </state>
       </provider>

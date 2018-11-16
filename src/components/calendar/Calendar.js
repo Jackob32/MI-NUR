@@ -427,13 +427,21 @@ class Cal extends Component {
 
                     maxWidth="md"
                 >
-                    <DialogTitle id="responsive-dialog-title">Úprava Směny</DialogTitle>
+                    <DialogTitle id="responsive-dialog-title">Úprava Směny :                   {this.state.dialoginfo.title || ""}</DialogTitle>
                     <DialogContent>
 
 
                         <DialogContentText>
-                            {this.state.dialoginfo.title || ""}
-                            <br/> <br/> <br/>
+                            <br/> <FormControl fullWidth className={classes.formControl} variant="outlined">
+                                <InputLabel htmlFor="adornment-amount">Název</InputLabel>
+                                <Input
+
+                                    type="text"
+                                    value={this.state.dialoginfo.title || ""}
+                                    label="Název"
+                                    onChange={this.handleDialogChange('title')}
+                                />
+                            </FormControl>
                         </DialogContentText>
 
 
@@ -442,7 +450,7 @@ class Cal extends Component {
                                 <FormControl fullWidth className={classes.formControl} variant="outlined">
                                     <InputLabel htmlFor="adornment-amount">Od</InputLabel>
                                     <Input
-                                        id="adornment-amount"
+
                                         type="datetime-local"
                                         value={this.state.dialoginfo.start.toDatetimeLocal() || ""}
                                         label="Od"
@@ -454,7 +462,7 @@ class Cal extends Component {
                                 <FormControl fullWidth className={classes.formControl} variant="outlined">
                                     <InputLabel htmlFor="adornment-amount">Do</InputLabel>
                                     <Input
-                                        id="adornment-amount"
+
                                         type="datetime-local"
                                         value={this.state.dialoginfo.end.toDatetimeLocal() || ""}
                                         label="Do"

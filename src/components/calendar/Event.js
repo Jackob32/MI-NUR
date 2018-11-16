@@ -20,16 +20,16 @@ function Event(props) {
                     <div align="left" color={"blue"}>
                             {event.employees.length === event.capacity &&
                             <Avatar className={classes.greenAvatar}>
-                                {event.employees.length}/{event.capacity}
+                                {event.employees.length}{"/"}{event.capacity}
                             </Avatar>
                         }
                         { (event.employees.length === 0 ||  event.employees.length > event.capacity) && <Avatar className={classes.redAvatar}>
-                            {event.employees.length}/{event.capacity}
+                            {event.employees.length}{"/"}{event.capacity}
                             </Avatar>
                         }
                         {event.employees.length < event.capacity && event.employees.length !== 0 &&
                             <Avatar className={classes.orangeAvatar}>
-                            {event.employees.length}/{event.capacity}
+                            {event.employees.length}{"/"}{event.capacity}
                             </Avatar>
                         }
 
