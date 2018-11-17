@@ -6,7 +6,7 @@ import Title from '../../../components/title/Title';
 
 import {withStyles} from '@material-ui/core/styles';
 import withRoot from '../../../withRoot';
-
+import {EmployeeData as Data} from "./../../../data"
 import styles from '../../../styles';
 import FormControl from "@material-ui/core/FormControl/FormControl";
 import FormGroup from "@material-ui/core/FormGroup/FormGroup";
@@ -19,7 +19,7 @@ class Home extends React.Component {
         open: false,
         freeshifts: true,
         partialshifts: true,
-        fullshifts: true,
+        fullshifts: false,
     };
 
     handleChange = name => event => {
@@ -49,7 +49,7 @@ class Home extends React.Component {
                                         <Checkbox checked={partialshifts} onChange={this.handleChange('partialshifts')}
                                                   value="partialshifts"/>
                                     }
-                                    label="Moje směny"
+                                    label="Pouze moje směny"
                                 />
 
                                 <FormControlLabel
@@ -80,7 +80,7 @@ class Home extends React.Component {
 
                 <Grid item xs>
                     <Cal
-                        searchEmployee={"Petr"}
+                        searchEmployee={Data.login.email}
                         freeshifts={this.state.freeshifts}
                         partialshifts={this.state.partialshifts}
                         fullshifts={this.state.fullshifts}

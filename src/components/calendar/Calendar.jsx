@@ -27,6 +27,7 @@ import red from '@material-ui/core/colors/red';
 import green from '@material-ui/core/colors/green';
 import orange from '@material-ui/core/colors/orange';
 import blue from '@material-ui/core/colors/blue';
+import grey from '@material-ui/core/colors/grey';
 import Toolbar from "./Toolbar";
 import Event from "./Event";
 import update from 'react-addons-update';
@@ -150,12 +151,12 @@ class Cal extends Component {
     addUserToEvent = (e) => {
 
         let index = this.state.events.findIndex(x => x.id === e.id);
-        let userid = rows.findIndex(x => x.email === "Pepa.Novak@gmail.com");
+        let userid = rows.findIndex(x => x.email === this.props.searchEmployee);
 
         let newevent = this.state.events[index];
 
-        if (e.employees.filter(e => e.email === 'Pepa.Novak@gmail.com').length > 0) {
-            let userid = newevent.employees.findIndex(x => x.email === "Pepa.Novak@gmail.com");
+        if (e.employees.filter(e => e.email === this.props.searchEmployee).length > 0) {
+            let userid = newevent.employees.findIndex(x => x.email === this.props.searchEmployee);
             newevent.employees.splice(userid, 1);
 
             this.setState({
@@ -216,15 +217,15 @@ class Cal extends Component {
                 backgroundColor = orange[500];
             }
         } else {
-            backgroundColor = blue[500];
+            backgroundColor = grey[500];
             if (isSelected)
-                backgroundColor = blue[700];
+                backgroundColor = grey[700];
             if (event.employees.length >= event.capacity) {
                 backgroundColor = red[500];
                 if (isSelected)
                     backgroundColor = red[700];
             }
-            if (event.employees.filter(e => e.email === 'Pepa.Novak@gmail.com').length > 0) {
+            if (event.employees.filter(e => e.email === this.props.searchEmployee).length > 0) {
                 backgroundColor = green[500];
                 if (isSelected)
                     backgroundColor = green[700];
@@ -327,7 +328,7 @@ class Cal extends Component {
             showEvents = showEvents.concat(this.state.events.filter(event => event.capacity <= event.employees.length));
         }
 
-        if (this.props.searchEmployee !== "") {
+        if (this.props.searchEmployee !== "" && (this.props.auth === "manager" || (this.props.partialshifts && this.props.auth === "employee"))) {
             showEvents = showEvents.filter(
                 event => event.employees.filter(
                     employee => {

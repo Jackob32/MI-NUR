@@ -38,7 +38,7 @@ let users=[
     createData('Filip', 'Dobře',20, 'Filip.Dobre@gmail.com', '+420721007440'),
     createData('Petr', 'Neposlecha',10, 'Petr.Neposlecha@gmail.com', '+420721007440'),
     createData('Honza', 'Správně',25, 'Spavnak@gmail.com', '+420721007440'),
-    createData('Pepa', 'Novak',25, 'Pepa.Novak@gmail.com', '+420721007440'),
+    createData('Pepa', 'Novak',25, 'pepa.novak@gmail.com', '+420721007440'),
     createData('Filip', 'Dobře',40, 'Petr.Novakcic@gmail.com', '+420721007440'),
     createData('Petr', 'Neposlecha',30, 'Petr.Neposlecha@gmail.com', '+420721007440'),
     createData('Tomáš', 'Chrian',25, 'PChrianic@gmail.com', '+420721007440'),
