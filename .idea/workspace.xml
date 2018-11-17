@@ -3,9 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="140ca68a-66a6-4314-a244-8355396e61da" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/calendar/Calendar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/calendar/Calendar.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/data.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/employee/pages/home.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/employee/pages/home.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.jsx" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -32,7 +30,7 @@
           <entry key="html" value="3" />
           <entry key="js" value="30" />
           <entry key="json" value="2" />
-          <entry key="jsx" value="88" />
+          <entry key="jsx" value="90" />
           <entry key="less" value="3" />
           <entry key="md" value="2" />
           <entry key="ts" value="7" />
@@ -43,7 +41,7 @@
           <entry key="CSS" value="3" />
           <entry key="HTML" value="3" />
           <entry key="JSON" value="2" />
-          <entry key="JSX Harmony" value="88" />
+          <entry key="JSX Harmony" value="90" />
           <entry key="JavaScript" value="29" />
           <entry key="Less" value="3" />
           <entry key="Markdown" value="2" />
@@ -57,17 +55,17 @@
           <entry key="ft" value="24" />
           <entry key="html" value="74" />
           <entry key="js" value="3632" />
-          <entry key="jsx" value="2985" />
-          <entry key="txt" value="227" />
+          <entry key="jsx" value="3000" />
+          <entry key="txt" value="233" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="CSS" value="274" />
           <entry key="HTML" value="74" />
-          <entry key="JSX Harmony" value="2985" />
+          <entry key="JSX Harmony" value="3000" />
           <entry key="JavaScript" value="3632" />
-          <entry key="PLAIN_TEXT" value="227" />
+          <entry key="PLAIN_TEXT" value="233" />
           <entry key="VTL" value="24" />
         </counts>
       </usages-collector>
@@ -81,27 +79,39 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/views/employee/pages/settings.jsx">
+        <entry file="file://$PROJECT_DIR$/src/components/calendar/Calendar.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="196">
-              <caret line="50" lean-forward="true" selection-start-line="50" selection-end-line="50" />
+            <state relative-caret-position="285">
+              <caret line="342" selection-start-line="342" selection-end-line="342" />
               <folding>
-                <element signature="e#0#26#0" expanded="true" />
+                <element signature="e#0#39#0" expanded="true" />
+                <element signature="e#142#170#0" expanded="true" />
+                <element signature="n#!!block;n#constructor#0;n#Cal#0" />
+                <element signature="n#!!block;n#EventAgenda#0;n#Cal#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/serviceWorker.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="85">
+              <caret line="20" column="34" lean-forward="true" selection-start-line="20" selection-start-column="34" selection-end-line="20" selection-end-column="34" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/components/calendar/Calendar.jsx">
+        <entry file="file://$PROJECT_DIR$/src/index.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="200">
-              <caret line="326" column="33" selection-start-line="326" selection-start-column="33" selection-end-line="326" selection-end-column="33" />
+            <state relative-caret-position="165">
+              <caret line="29" lean-forward="true" selection-start-line="29" selection-end-line="29" />
               <folding>
-                <element signature="e#0#39#0" expanded="true" />
-                <element signature="e#142#170#0" expanded="true" />
-                <element signature="n#!!block;n#constructor#0;n#Cal#0" />
-                <element signature="n#!!block;n#EventAgenda#0;n#Cal#0" />
+                <element signature="e#0#31#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -172,15 +182,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-144">
               <caret line="100" column="4" selection-start-line="100" selection-start-column="4" selection-end-line="100" selection-end-column="4" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/node_modules/@material-ui/core/styles/MuiThemeProvider.d.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="19" column="22" lean-forward="true" selection-start-line="19" selection-start-column="22" selection-end-line="19" selection-end-column="22" />
             </state>
           </provider>
         </entry>
@@ -284,6 +285,7 @@
         <option value="$PROJECT_DIR$/src/data.jsx" />
         <option value="$PROJECT_DIR$/src/views/employee/pages/home.jsx" />
         <option value="$PROJECT_DIR$/src/components/calendar/Calendar.jsx" />
+        <option value="$PROJECT_DIR$/src/index.jsx" />
       </list>
     </option>
   </component>
@@ -302,8 +304,10 @@
     </packageJsonPaths>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="703" />
+    <option name="y" value="514" />
     <option name="width" value="981" />
-    <option name="height" value="1044" />
+    <option name="height" value="1034" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -394,7 +398,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1542462322825" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1542491305448" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../react-shopping-cart" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -435,7 +439,7 @@
       <workItem from="1541549861912" duration="713000" />
       <workItem from="1541629077965" duration="8230000" />
       <workItem from="1541698348577" duration="59102000" />
-      <workItem from="1542302005044" duration="39803000" />
+      <workItem from="1542302005044" duration="42163000" />
     </task>
     <task id="LOCAL-00001" summary="Update user">
       <created>1541549950143</created>
@@ -528,11 +532,25 @@
       <option name="project" value="LOCAL" />
       <updated>1542418894247</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Finish">
+      <created>1542462412190</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1542462412190</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Finish">
+      <created>1542483239725</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1542483239725</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="108290000" />
+    <option name="totallyTimeSpent" value="110650000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -547,7 +565,7 @@
     <frame x="-7" y="-7" width="1295" height="704" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18785425" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18785425" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -565,8 +583,8 @@
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49959514" weight="0.32924694" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="9" sideWeight="0.54817814" visible="true" weight="0.32924694" />
-      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.45182186" side_tool="true" visible="true" weight="0.32924694" />
+      <window_info anchor="bottom" x="297" y="227" width="850" height="328" id="Terminal" order="9" sideWeight="0.5465587" visible="true" weight="0.32924694" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.4534413" side_tool="true" visible="true" weight="0.32924694" />
       <window_info anchor="bottom" id="TypeScript" order="11" sideWeight="0.49878544" weight="0.32924694" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -598,7 +616,8 @@
     <MESSAGE value="Fixing Errors and Warnings, new Login Screen" />
     <MESSAGE value="Deleted Titles" />
     <MESSAGE value="space" />
-    <option name="LAST_COMMIT_MESSAGE" value="space" />
+    <MESSAGE value="Finish" />
+    <option name="LAST_COMMIT_MESSAGE" value="Finish" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/node_modules/@types/react/index.d.ts">
@@ -924,32 +943,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/serviceWorker.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1700">
-          <caret line="11" selection-start-line="11" selection-end-line="11" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/views/employee_login.jsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="782">
           <caret line="46" column="18" lean-forward="true" selection-start-line="46" selection-start-column="18" selection-end-line="46" selection-end-column="18" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/index.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="22" column="23" selection-start-line="22" selection-start-column="23" selection-end-line="22" selection-end-column="23" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1180,13 +1179,33 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/calendar/Calendar.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="200">
-          <caret line="326" column="33" selection-start-line="326" selection-start-column="33" selection-end-line="326" selection-end-column="33" />
+        <state relative-caret-position="285">
+          <caret line="342" selection-start-line="342" selection-end-line="342" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
             <element signature="e#142#170#0" expanded="true" />
             <element signature="n#!!block;n#constructor#0;n#Cal#0" />
             <element signature="n#!!block;n#EventAgenda#0;n#Cal#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/serviceWorker.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="20" column="34" lean-forward="true" selection-start-line="20" selection-start-column="34" selection-end-line="20" selection-end-column="34" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/index.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="29" lean-forward="true" selection-start-line="29" selection-end-line="29" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
           </folding>
         </state>
       </provider>
