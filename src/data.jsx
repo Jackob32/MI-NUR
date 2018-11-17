@@ -102,17 +102,17 @@ let EmployeeData = {
     tabs: [
         {
             value: 0,
-            label:"Home",
+            label:"Přehled",
             to:"/employee"
         },
         {
             value: 1,
-            label:"Profile",
+            label:"Můj profil",
             to:"/employee/profile"
         },
         {
             value: 2,
-            label:"Settings",
+            label:"Nastavení",
             to:"/employee/settings"
         }
 

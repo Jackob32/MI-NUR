@@ -35,7 +35,7 @@ class Home extends React.Component {
         return (
             <div className={classes.root}>
 
-                <Title title="Přehled"/>
+
                 <Grid container spacing={16}>
 
                     <Grid item xs={12} sm={6}>

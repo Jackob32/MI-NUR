@@ -87,7 +87,7 @@ class Usermanager extends React.Component {
         return (
 
             <div>
-                <Title title="Správa Uživatelů"/>
+
                 <Button variant="contained" onClick={this.handleClickOpen} color="primary">
                     Nový uživatel
                 </Button>

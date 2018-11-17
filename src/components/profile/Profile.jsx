@@ -40,9 +40,7 @@ class Profile extends React.Component {
 
         return (
             <div className={classes.root}>
-                <Title title="Profil"/>
-
-                <form className={classes.container} noValidate autoComplete="off">
+                          <form className={classes.container} noValidate autoComplete="off">
 
                     <Grid container spacing={16}>
                         <Grid item xs>

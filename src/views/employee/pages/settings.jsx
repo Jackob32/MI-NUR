@@ -48,7 +48,7 @@ class Settings extends React.Component {
         return (
             <div className={classes.root}>
 
-                <Title title="Nastavení" />
+
 
                 <form className={classes.container} noValidate autoComplete="off">
 
