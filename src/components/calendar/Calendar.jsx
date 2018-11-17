@@ -6,7 +6,7 @@ import createSlot from 'react-tackle-box/Slot'
 import "./Cal.css";
 
 import withRoot from "../../withRoot";
-import styles from "../../theme";
+import styles from "../../styles";
 import {withStyles} from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import TextField from '@material-ui/core/TextField';
@@ -19,16 +19,13 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
-import {events, rows} from "../../data"
+import {events as events, users as rows} from "../../data"
 import FormControl from '@material-ui/core/FormControl';
 import Usertable from "../usertable/Usertable";
 import Autocomplete from "../autocomplete/Autocomplete";
-import Typography from "@material-ui/core/Typography";
-import Paper from "@material-ui/core/Paper";
 import red from '@material-ui/core/colors/red';
 import green from '@material-ui/core/colors/green';
 import orange from '@material-ui/core/colors/orange';
-import grey from '@material-ui/core/colors/grey';
 import blue from '@material-ui/core/colors/blue';
 import Toolbar from "./Toolbar";
 import Event from "./Event";
@@ -51,7 +48,7 @@ let ExampleControlSlot = createSlot();
 const localizer = BigCalendar.momentLocalizer(moment);
 
 // the dummy calendar data
-const DragAndDropCalendar = withDragAndDrop(BigCalendar)
+const DragAndDropCalendar = withDragAndDrop(BigCalendar);
 
 
 class Cal extends Component {
@@ -97,7 +94,6 @@ class Cal extends Component {
     handleClose = () => {
         this.setState({isEditModalOpen: false});
     };
-
     handleSearchChange = (value) => {
         this.setState({
             searchEmployee: value,
@@ -126,7 +122,6 @@ class Cal extends Component {
 
         this.handleClose();
     };
-
     handleUserDelete = (x) => {
 
         let index = this.state.dialoginfo.employees.findIndex(item => item.id === x);
@@ -140,7 +135,6 @@ class Cal extends Component {
             }
         });
     };
-
     handleDelete = () => {
 
         let index = this.state.events.findIndex(x => x.id === this.state.dialoginfo.id);
@@ -153,23 +147,22 @@ class Cal extends Component {
         });
 
     };
-
     addUserToEvent = (e) => {
 
         let index = this.state.events.findIndex(x => x.id === e.id);
         let userid = rows.findIndex(x => x.email === "Pepa.Novak@gmail.com");
 
-        let newevent=this.state.events[index];
+        let newevent = this.state.events[index];
 
         if (e.employees.filter(e => e.email === 'Pepa.Novak@gmail.com').length > 0) {
             let userid = newevent.employees.findIndex(x => x.email === "Pepa.Novak@gmail.com");
-            newevent.employees.splice(userid,1);
+            newevent.employees.splice(userid, 1);
 
             this.setState({
                 events: update(this.state.events, {[index]: {$set: newevent}})
             });
 
-        }else if(e.employees.length<e.capacity){
+        } else if (e.employees.length < e.capacity) {
 
             newevent.employees.push(rows[userid]);
 
@@ -177,14 +170,13 @@ class Cal extends Component {
                 events: update(this.state.events, {[index]: {$set: newevent}})
             });
         }
-    }
-
+    };
     handleDialogChange = prop => event => {
         //  console.log(event.target.type);
         // console.log(event.target.value);
         let val = event.target.value;
         if (event.target.type === "datetime-local") {
-          //  console.log(val);
+            //  console.log(val);
             val = new Date(val);
 
         }
@@ -207,7 +199,73 @@ class Cal extends Component {
         });
 
         // alert(`${event.title} was resized to ${start}-${end}`)
-    }
+    };
+    eventStyleGetter = (event, start, end, isSelected) => {
+
+        var backgroundColor = '#' + event.hexColor;
+
+        if (this.props.auth === "manager") {
+
+            if (event.employees.length === event.capacity) {
+                backgroundColor = green[500];
+            }
+            if (event.employees.length === 0 || event.employees.length > event.capacity) {
+                backgroundColor = red[500];
+            }
+            if (event.employees.length < event.capacity && event.employees.length !== 0) {
+                backgroundColor = orange[500];
+            }
+        } else {
+            backgroundColor = blue[500];
+            if (isSelected)
+                backgroundColor = blue[700];
+            if (event.employees.length >= event.capacity) {
+                backgroundColor = red[500];
+                if (isSelected)
+                    backgroundColor = red[700];
+            }
+            if (event.employees.filter(e => e.email === 'Pepa.Novak@gmail.com').length > 0) {
+                backgroundColor = green[500];
+                if (isSelected)
+                    backgroundColor = green[700];
+            }
+
+        }
+
+        let style = {
+            backgroundColor: backgroundColor,
+            borderRadius: '5px',
+            color: 'white',
+            border: '6px',
+        };
+
+        return {
+            style: style
+        };
+    };
+    moveEvent = ({event, start, end, isAllDay: droppedOnAllDaySlot}) => {
+        const events = this.state.events;
+
+        const idx = events.indexOf(event);
+        let allDay = event.allDay;
+
+        if (!event.allDay && droppedOnAllDaySlot) {
+            allDay = true
+        } else if (event.allDay && !droppedOnAllDaySlot) {
+            allDay = false
+        }
+
+        const updatedEvent = {...event, start, end, allDay};
+
+        const nextEvents = [...events];
+        nextEvents.splice(idx, 1, updatedEvent);
+
+        this.setState({
+            events: nextEvents,
+        })
+
+        // alert(`${event.title} was dropped onto ${updatedEvent.start}`)
+    };
 
     constructor(props) {
 
@@ -249,72 +307,6 @@ class Cal extends Component {
     </span>
         )
     }
-    eventStyleGetter=(event, start, end, isSelected)=> {
-
-        var backgroundColor = '#' + event.hexColor;
-
-        if(this.props.auth === "manager") {
-
-            if (event.employees.length === event.capacity) {
-                backgroundColor = green[500];
-            }
-            if (event.employees.length === 0 || event.employees.length > event.capacity) {
-                backgroundColor = red[500];
-            }
-            if (event.employees.length < event.capacity && event.employees.length !== 0) {
-                backgroundColor = orange[500];
-            }
-        }else{
-            backgroundColor = blue[500];
-            if(isSelected)
-                backgroundColor = blue[700];
-            if (event.employees.length >= event.capacity) {
-                backgroundColor = red[500];
-                if(isSelected)
-                backgroundColor = red[700];
-            }
-            if (event.employees.filter(e => e.email === 'Pepa.Novak@gmail.com').length > 0) {
-                backgroundColor = green[500];
-                if(isSelected)
-                    backgroundColor = green[700];
-            }
-
-        }
-
-            let style = {
-                backgroundColor: backgroundColor,
-                borderRadius: '5px',
-                color: 'white',
-                border: '6px',
-            };
-
-        return {
-            style: style
-        };
-    }
-    moveEvent=({event, start, end, isAllDay: droppedOnAllDaySlot})=> {
-        const events = this.state.events;
-
-        const idx = events.indexOf(event)
-        let allDay = event.allDay
-
-        if (!event.allDay && droppedOnAllDaySlot) {
-            allDay = true
-        } else if (event.allDay && !droppedOnAllDaySlot) {
-            allDay = false
-        }
-
-        const updatedEvent = {...event, start, end, allDay}
-
-        const nextEvents = [...events]
-        nextEvents.splice(idx, 1, updatedEvent)
-
-        this.setState({
-            events: nextEvents,
-        })
-
-        // alert(`${event.title} was dropped onto ${updatedEvent.start}`)
-    }
 
     render() {
 
@@ -323,7 +315,7 @@ class Cal extends Component {
 
         if (this.props.freeshifts && (this.props.auth && this.props.auth === "manager")) {
             showEvents = showEvents.concat(this.state.events.filter(event => event.employees.length === 0));
-        }else if(this.props.freeshifts && (this.props.auth && this.props.auth === "employee")){
+        } else if (this.props.freeshifts && (this.props.auth && this.props.auth === "employee")) {
             showEvents = showEvents.concat(this.state.events.filter(event => event.capacity > event.employees.length));
         }
 
@@ -334,8 +326,6 @@ class Cal extends Component {
         if (this.props.fullshifts) {
             showEvents = showEvents.concat(this.state.events.filter(event => event.capacity <= event.employees.length));
         }
-
-       // console.log(showEvents);
 
         if (this.props.searchEmployee !== "") {
             showEvents = showEvents.filter(
@@ -357,16 +347,13 @@ class Cal extends Component {
             value: user,
             label: user.firstname + " " + user.lastname,
         }));
-        //console.log("this.state");
-       // console.log(this.state);
 
-        let allViews = Object.keys(BigCalendar.Views).map(k => BigCalendar.Views[k])
+        let allViews = Object.keys(BigCalendar.Views).map(k => BigCalendar.Views[k]);
 
         return (
             <div className="App">
 
                 <ExampleControlSlot.Entry waitForOutlet>
-
 
                 </ExampleControlSlot.Entry>
 
@@ -427,25 +414,26 @@ class Cal extends Component {
 
                     maxWidth="md"
                 >
-                    <DialogTitle id="responsive-dialog-title">Úprava Směny :                   {this.state.dialoginfo.title || ""}</DialogTitle>
+                    <DialogTitle id="responsive-dialog-title">Úprava Směny
+                        : {this.state.dialoginfo.title || ""}</DialogTitle>
                     <DialogContent>
 
 
                         <DialogContentText>
                             <br/> <FormControl fullWidth className={classes.formControl} variant="outlined">
-                                <InputLabel htmlFor="adornment-amount">Název</InputLabel>
-                                <Input
+                            <InputLabel htmlFor="adornment-amount">Název</InputLabel>
+                            <Input
 
-                                    type="text"
-                                    value={this.state.dialoginfo.title || ""}
-                                    label="Název"
-                                    onChange={this.handleDialogChange('title')}
-                                />
-                            </FormControl>
+                                type="text"
+                                value={this.state.dialoginfo.title || ""}
+                                label="Název"
+                                onChange={this.handleDialogChange('title')}
+                            />
+                        </FormControl>
                         </DialogContentText>
 
 
-                        <Grid container spacing={16} alignItems={"flex"}>
+                        <Grid container spacing={16} alignItems={"stretch"}>
                             <Grid item md={4} xs={12}>
                                 <FormControl fullWidth className={classes.formControl} variant="outlined">
                                     <InputLabel htmlFor="adornment-amount">Od</InputLabel>
@@ -486,7 +474,7 @@ class Cal extends Component {
                             </Grid>
                         </Grid>
                         <br/>
-                        <Grid container spacing={12} alignContent={"center"}>
+                        <Grid container spacing={16} alignContent={"center"}>
                             <Grid item md={12} xs={12}>
                                 <FormControl fullWidth className={classes.formControl} variant="outlined">
                                     <InputLabel htmlFor="adornment-amount"></InputLabel>
@@ -505,7 +493,7 @@ class Cal extends Component {
                             </Grid>
                         </Grid>
 
-                        <Grid container spacing={12}>
+                        <Grid container spacing={16}>
                             <Grid item md={10} xs={8}>
 
                                 <Autocomplete
@@ -527,9 +515,10 @@ class Cal extends Component {
                             </Grid>
 
                         </Grid>
-                        <Grid container spacing={12} alignContent={"center"}>
+                        <Grid container spacing={16} alignContent={"center"}>
                             <Grid item xs={12}>
-                                <Usertable data={this.state.dialoginfo.employees || []} onDelete={this.handleUserDelete}/>
+                                <Usertable data={this.state.dialoginfo.employees || []}
+                                           onDelete={this.handleUserDelete}/>
                             </Grid>
                         </Grid>
 
@@ -553,7 +542,6 @@ class Cal extends Component {
         );
     }
 }
-
 
 Cal.propTypes = {
     classes: PropTypes.object.isRequired,

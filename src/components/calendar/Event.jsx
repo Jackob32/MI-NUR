@@ -2,7 +2,7 @@ import React from "react";
 // the moment library for getting correct time and date
 import PropTypes from 'prop-types';
 import withRoot from "../../withRoot";
-import styles from "../../theme";
+import styles from "../../styles";
 import {withStyles} from '@material-ui/core/styles';
 import Grid from "@material-ui/core/Grid/Grid";
 import Avatar from "@material-ui/core/Avatar/Avatar";

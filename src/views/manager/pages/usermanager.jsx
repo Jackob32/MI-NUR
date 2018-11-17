@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
 import Title from '../../../components/title/Title';
 import Usertable from '../../../components/usertable/Usertable';
-import {rows} from '../../../data';
-import styles from '../../../theme';
+import {users as rows} from '../../../data';
+import styles from '../../../styles';
 import Button from "@material-ui/core/Button/Button";
 import Dialog from "@material-ui/core/Dialog/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle/DialogTitle";
@@ -16,13 +16,8 @@ import InputLabel from "@material-ui/core/InputLabel/InputLabel";
 import Input from "@material-ui/core/Input/Input";
 import DialogActions from "@material-ui/core/DialogActions/DialogActions";
 import Select from '@material-ui/core/Select';
-const actionsStyles = theme => ({
-    root: {
-        flexShrink: 0,
-        color: theme.palette.text.secondary,
-        marginLeft: theme.spacing.unit * 2.5,
-    },
-});
+import withRoot from "../../../withRoot";
+
 
 class Usermanager extends React.Component {
 
@@ -50,16 +45,13 @@ class Usermanager extends React.Component {
         this.handleClose();
     };
 
-    handleDelete = (x) => {
-
-            let index = this.state.rows.findIndex(item => item.id === x);
-
-            let array = [...this.state.rows]; // make a separate copy of the array
-            array.splice(index, 1);
-            this.setState({
-                rows: array,
-            });
-
+    handleDelete = (id) => {
+        let index = this.state.rows.findIndex(item => item.id === id);
+        this.setState((prevState) => {
+            let tmpArr = [...prevState.rows];
+            tmpArr.splice(index, 1);
+            return {rows: tmpArr,};
+        });
     };
 
     handleDialogChange = prop => event => {
@@ -69,18 +61,10 @@ class Usermanager extends React.Component {
                 [prop]: prevState.edituser[prop] = val
             };
         });
-
-
-        console.log(this.state);
     };
 
     constructor(props) {
-
         super(props);
-
-        //here we create the filtering based on given props
-
-        // props.value = props.value || '';
 
         this.state = {
             rows: rows,
@@ -103,34 +87,26 @@ class Usermanager extends React.Component {
         return (
 
             <div>
-
                 <Title title="Správa Uživatelů"/>
-
                 <Button variant="contained" onClick={this.handleClickOpen} color="primary">
                     Nový uživatel
                 </Button>
-
-                <Usertable data={this.state.rows} onDelete={this.handleDelete} />
-
+                <Usertable data={this.state.rows} onDelete={this.handleDelete}/>
                 <Dialog
                     open={this.state.isEditModalOpen}
                     onClose={this.handleClose}
                     aria-labelledby="responsive-dialog-title"
                     maxWidth="xs"
-
                 >
                     <DialogTitle id="responsive-dialog-title">Úprava Směny</DialogTitle>
                     <DialogContent>
 
-
                         <DialogContentText>
                             Nový uživatel
-
                         </DialogContentText>
 
-
-                        <Grid container spacing={16}>
-                            <Grid item xs={12} alignContent={"center"}>
+                        <Grid container spacing={16} alignContent={"center"}>
+                            <Grid item xs={12} >
                                 <FormControl fullWidth className={classes.formControl} variant="outlined">
                                     <InputLabel htmlFor="adornment-amount">Jméno</InputLabel>
                                     <Input
@@ -169,7 +145,8 @@ class Usermanager extends React.Component {
                             </Grid>
                             <Grid item xs={12}>
                                 <FormControl fullWidth className={classes.formControl} variant="outlined">
-                                    <InputLabel htmlFor="adornment-amount">Typ Uživatele Vedoucí-Zaměstnanec</InputLabel>
+                                    <InputLabel htmlFor="adornment-amount">Typ Uživatele
+                                        Vedoucí-Zaměstnanec</InputLabel>
                                     <InputLabel htmlFor="type">Typ Uživatele Vedoucí-Zaměstnanec</InputLabel>
                                     <Select
                                         native
@@ -219,4 +196,4 @@ Usermanager.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Usermanager);
+export default withRoot(withStyles(styles)(Usermanager));

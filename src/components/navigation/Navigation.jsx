@@ -1,17 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import {withStyles} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
-import { Link } from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 
-import { fade } from '@material-ui/core/styles/colorManipulator';
+import {fade} from '@material-ui/core/styles/colorManipulator';
 import Badge from '@material-ui/core/Badge';
 
 import AccountCircle from '@material-ui/icons/AccountCircle';
@@ -20,10 +20,9 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 
 
-
-function TabContainer({ children, dir }) {
+function TabContainer({children, dir}) {
     return (
-        <Typography component="div" dir={dir} style={{ padding: 8 * 3 }}>
+        <Typography component="div" dir={dir} style={{padding: 8 * 3}}>
             {children}
         </Typography>
     );
@@ -45,7 +44,7 @@ const styles = theme => ({
         marginLeft: -12,
         marginRight: 20,
     },
-     title: {
+    title: {
         display: 'none',
         [theme.breakpoints.up('sm')]: {
             display: 'block',
@@ -106,54 +105,42 @@ const styles = theme => ({
 
 class Navigation extends React.Component {
 
-    constructor(props) {
-        super(props);
-
-if(this.props.bell===true) this.bell=true;
-
-    };
-
     state = {
         value: 0,
     };
-
     handleProfileMenuOpen = event => {
-        this.setState({ anchorEl: event.currentTarget });
+        this.setState({anchorEl: event.currentTarget});
     };
-
-    handleMenuClose = () => {
-        this.setState({ anchorEl: null });
-        this.handleMobileMenuClose();
-    };
-
     handleMobileMenuOpen = event => {
-        this.setState({ mobileMoreAnchorEl: event.currentTarget });
-    };
-
-    handleMobileMenuClose = () => {
-        this.setState({ mobileMoreAnchorEl: null });
+        this.setState({mobileMoreAnchorEl: event.currentTarget});
     };
     handleChange = (event, value) => {
-        this.setState({ value });
+        this.setState({value});
     };
 
+    constructor(props) {
+        super(props);
+
+        if (this.props.bell === true) this.bell = true;
+
+    };
 
     render() {
-        const { classes, theme } = this.props;
-        const { anchorEl, mobileMoreAnchorEl } = this.state;
+        const {classes} = this.props;
+        const {anchorEl} = this.state;
         const isMenuOpen = Boolean(anchorEl);
-        const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
         return (
             <div className={classes.root}>
 
                 <Grid container spacing={24}>
-                    <Grid item xs={12} sm={6} >
+                    <Grid item xs={12} sm={6}>
 
-                                <Typography variant="subtitle1" gutterBottom>
-                                Jste přihlášen jako : {this.props.data.login.firstname}
-                                    {" "}
-                                {this.props.data.login.lastname}
-                            </Typography>
+                        <Typography variant="subtitle1" gutterBottom>
+                            Jste přihlášen jako : {this.props.data.login.firstname}
+                            {" "}
+                            {this.props.data.login.lastname}
+                        </Typography>
 
                     </Grid>
 
@@ -167,73 +154,75 @@ if(this.props.bell===true) this.bell=true;
                     <Grid item xs={6} sm={3}>
 
 
-                            <Button href="#text-buttons"  component={Link}  to={this.props.data.logout} className={classes.button}>
-                                Odhlásit se
-                            </Button>
+                        <Button href="#text-buttons" component={Link} to={this.props.data.logout}
+                                className={classes.button}>
+                            Odhlásit se
+                        </Button>
 
                         {false &&
-                            <Button href="#text-buttons" component={Link} to={this.props.data.switch}
-                                    className={classes.button}>
-                                Prepnout roli
-                            </Button>
+                        <Button href="#text-buttons" component={Link} to={this.props.data.switch}
+                                className={classes.button}>
+                            Prepnout roli
+                        </Button>
                         }
                     </Grid>
                     <Grid item xs={12}>
-                <AppBar position="static" color="default">
+                        <AppBar position="static" color="default">
 
-                    <Toolbar>
+                            <Toolbar>
 
-                        <Tabs
-                            value={this.state.value}
-                            onChange={this.handleChange}
-                            indicatorColor="primary"
-                            textColor="primary"
-                            centered
-                        >
-                            {this.props.data.tabs.map(i =>
-                                <Tab value={i.value} label={i.label} key={i.value} component={Link} to={i.to} />
-                            )}
-                                    </Tabs>
+                                <Tabs
+                                    value={this.state.value}
+                                    onChange={this.handleChange}
+                                    indicatorColor="primary"
+                                    textColor="primary"
+                                    centered
+                                >
+                                    {this.props.data.tabs.map(i =>
+                                        <Tab value={i.value} label={i.label} key={i.value} component={Link} to={i.to}/>
+                                    )}
+                                </Tabs>
 
-                        <div className={classes.grow} />
+                                <div className={classes.grow}/>
 
-                        <div className={classes.sectionDesktop}>
+                                <div className={classes.sectionDesktop}>
 
-                            {this.bell && false &&
-                                <div>
+                                    {this.bell && false &&
+                                    <div>
 
-                            <IconButton color="inherit">
-                                <Badge badgeContent={4} color="secondary">
-                                    <MailIcon />
-                                </Badge>
-                            </IconButton>
+                                        <IconButton color="inherit">
+                                            <Badge badgeContent={4} color="secondary">
+                                                <MailIcon/>
+                                            </Badge>
+                                        </IconButton>
 
-                            <IconButton color="inherit">
-                                <Badge badgeContent={17} color="secondary">
-                                    <NotificationsIcon />
-                                </Badge>
-                            </IconButton>
-                                    {false &&
-                                    <IconButton
-                                        aria-owns={isMenuOpen ? 'material-appbar' : undefined}
-                                        aria-haspopup="true"
-                                        onClick={this.handleProfileMenuOpen}
-                                        color="inherit"
-                                    >
-                                        <AccountCircle/>
+                                        <IconButton color="inherit">
+                                            <Badge badgeContent={17} color="secondary">
+                                                <NotificationsIcon/>
+                                            </Badge>
+                                        </IconButton>
+                                        {false &&
+                                        <IconButton
+                                            aria-owns={isMenuOpen ? 'material-appbar' : undefined}
+                                            aria-haspopup="true"
+                                            onClick={this.handleProfileMenuOpen}
+                                            color="inherit"
+                                        >
+                                            <AccountCircle/>
+                                        </IconButton>
+                                        }
+                                    </div>}
+                                </div>
+                                <div className={classes.sectionMobile}>
+                                    <IconButton aria-haspopup="true" onClick={this.handleMobileMenuOpen}
+                                                color="inherit">
+                                        <MoreIcon/>
                                     </IconButton>
-                                    }
-                        </div>     }
-                       </div>
-                        <div className={classes.sectionMobile}>
-                            <IconButton aria-haspopup="true" onClick={this.handleMobileMenuOpen} color="inherit">
-                                <MoreIcon />
-                            </IconButton>
 
-                        </div>
+                                </div>
 
-                    </Toolbar>
-                       </AppBar>
+                            </Toolbar>
+                        </AppBar>
 
                     </Grid>
                 </Grid>
@@ -247,4 +236,4 @@ Navigation.propTypes = {
     theme: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles, { withTheme: true })(Navigation);
+export default withStyles(styles, {withTheme: true})(Navigation);

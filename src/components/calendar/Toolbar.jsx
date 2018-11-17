@@ -3,7 +3,7 @@ import React from "react";
 import moment from "moment";
 import PropTypes from 'prop-types';
 import withRoot from "../../withRoot";
-import styles from "../../theme";
+import styles from "../../styles";
 import {withStyles} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -20,16 +20,16 @@ function CustomToolbar(toolbar) {
     const goToDayView = () => {
         console.log(toolbar);
         toolbar.onView('day');
-    }
+    };
     const goToWeekView = () => {
         toolbar.onView('week');
-    }
+    };
     const goToMonthView = () => {
         toolbar.onView('month');
-    }
+    };
     const goToAgendaView = () => {
         toolbar.onView('agenda');
-    }
+    };
     const goToBack = () => {
         toolbar.onNavigate('PREV');
     };
@@ -89,7 +89,7 @@ function CustomToolbar(toolbar) {
 
         </div>
     );
-};
+}
 
 
 CustomToolbar.propTypes = {

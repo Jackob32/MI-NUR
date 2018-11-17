@@ -10,87 +10,55 @@ import Usermanager from "./pages/usermanager";
 import Grid from '@material-ui/core/Grid';
 import {Route, Switch} from 'react-router-dom';
 
-import styles from '../../theme';
+import styles from '../../styles';
+import {ManagerData as Data} from '../../data'
 
+class Manager extends React.Component {
+    state = {
+        navData: Data,
+        open: false,
+    };
 
+    handleSubmit = (user) => {
+        this.setState({
+            navData: {
+                ...this.state.navData,
+                login: user
+            },
 
-var navData = {
-    tabs: [
-        {
-            value: 0,
-            label:"Přehled",
-            to:"/manager"
-        },
-        {
-            value: 1,
-            label:"Můj profil",
-            to:"/manager/profile"
-        },
-        {
-            value: 2,
-            label:"Správa uživatelů",
-            to:"/manager/usermanager"
-        }
+        });
+    };
 
-    ],
+    render() {
+        const {classes} = this.props;
 
-    login: {
-        firstname:"Jan",
-        lastname:"Král",
-email:"jan.kral@gmail.com"
-
-    },
-
-    logout: "/manager/login",
-    switch: "/employee",
-
-
-};
-
-
-    class Manager extends React.Component {
-        state = {
-            navData:navData,
-            open: false,
-        };
-
-        handleSubmit = (user) => {
-            this.setState({
-                navData: {...this.state.navData,
-                    login: user
-                },
-
-            });
-        };
-
-        render() {
-            const {classes} = this.props;
-            const {open} = this.state;
-
-            return (
-                <div className={classes.root}>
-                    <Grid
-                        container
-                        direction="row"
-                        justify="center"
-                    >
-                        <Grid item xs={8}>
-                            <Navigation data={this.state.navData}/>
-                        </Grid>
-
-                        <Grid item xs={8}>
-                    <Switch>
-                        <Route path={'/manager'} component={Home} exact/>
-
-                        <Route path={'/manager/profile'} render={(props) => <Profile {...props} login={this.state.navData.login} handleSubmit={this.handleSubmit} />} />
-                        <Route path={'/manager/usermanager'} component={Usermanager}/>
-                    </Switch>
+        return (
+            <div className={classes.root}>
+                <Grid
+                    container
+                    direction="row"
+                    justify="center"
+                >
+                    <Grid item xs={8}>
+                        <Navigation data={this.state.navData}/>
                     </Grid>
+
+                    <Grid item xs={8}>
+                        <Switch>
+                            <Route path={'/manager'} component={Home} exact/>
+
+                            <Route path={'/manager/profile'}
+                                   render={(props) => <Profile {...props} login={this.state.navData.login}
+                                                               handleSubmit={this.handleSubmit}/>}/>
+
+                            <Route path={'/manager/usermanager'} component={Usermanager}/>
+                        </Switch>
                     </Grid>
-                </div>
-            );
-        }
+                </Grid>
+            </div>
+        );
     }
+}
 
 Manager.propTypes = {
     classes: PropTypes.object.isRequired,

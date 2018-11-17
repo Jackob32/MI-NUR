@@ -1,10 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import SwipeableViews from 'react-swipeable-views';
+
 import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom'
 import Grid from '@material-ui/core/Grid';
@@ -134,16 +132,12 @@ if(this.props.bell===true) this.bell=true;
     handleMobileMenuClose = () => {
         this.setState({ mobileMoreAnchorEl: null });
     };
-    handleChange = (event, value) => {
-        this.setState({ value });
-    };
-
 
     render() {
-        const { classes, theme } = this.props;
-        const { anchorEl, mobileMoreAnchorEl } = this.state;
+        const { classes } = this.props;
+        const { anchorEl } = this.state;
         const isMenuOpen = Boolean(anchorEl);
-        const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
         return (
             <div className={classes.root}>
 

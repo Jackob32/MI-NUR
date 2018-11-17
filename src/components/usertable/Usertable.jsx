@@ -13,17 +13,8 @@ import FirstPageIcon from '@material-ui/icons/FirstPage';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
-import Title from '../../components/title/Title';
-import {Link} from 'react-router-dom';
-import Button from '@material-ui/core/Button';
 import TableHead from '@material-ui/core/TableHead';
-import {events} from "../../data";
-import ArrowBackIosSharp from "@material-ui/core/SvgIcon/SvgIcon";
-import Typography from "@material-ui/core/Typography/Typography";
 import Delete from '@material-ui/icons/Delete';
-import DialogActions from "@material-ui/core/DialogActions/DialogActions";
-
-
 
 const actionsStyles = theme => ({
     root: {
@@ -119,9 +110,7 @@ const styles = theme => ({
 
 class Usertable extends React.Component {
 
-
     constructor(props) {
-
         super(props);
 
         this.state = {
@@ -152,9 +141,6 @@ class Usertable extends React.Component {
 
             <Paper className={classes.root}>
                 <div className={classes.tableWrapper}>
-
-
-
 
                     <Table className={classes.table}>
 

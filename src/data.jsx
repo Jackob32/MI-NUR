@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { fade } from '@material-ui/core/styles/colorManipulator';
-
 function random(x){
     return Math.floor(Math.random()*x) + 1;
 
@@ -35,7 +33,7 @@ function createEvent(title, st, en, cap) {
 
 }
 
-let rows=[
+let users=[
     createData('Petr', 'Novakčič',40, 'Petr.Novakcic@gmail.com', '+420721007440'),
     createData('Filip', 'Dobře',20, 'Filip.Dobre@gmail.com', '+420721007440'),
     createData('Petr', 'Neposlecha',10, 'Petr.Neposlecha@gmail.com', '+420721007440'),
@@ -62,10 +60,72 @@ let events=[
 for (let i in events) {
     let tmp = [];
     for (let p in events[i].employees) {
-        tmp.push(rows[events[i].employees[p]])
+        tmp.push(users[events[i].employees[p]])
 
     }
     events[i].employees = tmp;
 }
 
-export {events,rows};
+let ManagerData = {
+    tabs: [
+        {
+            value: 0,
+            label:"Přehled",
+            to:"/manager"
+        },
+        {
+            value: 1,
+            label:"Můj profil",
+            to:"/manager/profile"
+        },
+        {
+            value: 2,
+            label:"Správa uživatelů",
+            to:"/manager/usermanager"
+        }
+
+    ],
+
+    login: {
+        firstname:"Jan",
+        lastname:"Král",
+        email:"jan.kral@gmail.com"
+
+    },
+
+    logout: "/login",
+    switch: "/employee",
+
+};
+
+let EmployeeData = {
+    tabs: [
+        {
+            value: 0,
+            label:"Home",
+            to:"/employee"
+        },
+        {
+            value: 1,
+            label:"Profile",
+            to:"/employee/profile"
+        },
+        {
+            value: 2,
+            label:"Settings",
+            to:"/employee/settings"
+        }
+
+    ],
+
+    login: {
+        firstname:"Pepa",
+        lastname:"Novák",
+        email:"pepa.novak@gmail.com"
+
+    },
+    logout: "/login",
+    switch: "/manager",
+};
+
+export {events,users,ManagerData,EmployeeData};

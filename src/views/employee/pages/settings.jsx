@@ -7,14 +7,14 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 import Grid from '@material-ui/core/Grid';
 import Checkbox from '@material-ui/core/Checkbox';
-import { withStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { withStyles, createMuiTheme } from '@material-ui/core/styles';
 import green from '@material-ui/core/colors/green';
 
 import Title from '../../../components/title/Title';
 
 import withRoot from '../../../withRoot';
 
-import styles from '../../../theme';
+import styles from '../../../styles';
 
 
 class Settings extends React.Component {
@@ -35,7 +35,6 @@ class Settings extends React.Component {
 
     render() {
         const { classes } = this.props;
-        const { open } = this.state;
 
         const theme = createMuiTheme({
             palette: {

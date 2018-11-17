@@ -13,9 +13,6 @@ import Chip from '@material-ui/core/Chip';
 import MenuItem from '@material-ui/core/MenuItem';
 import CancelIcon from '@material-ui/icons/Cancel';
 import { emphasize } from '@material-ui/core/styles/colorManipulator';
-import FormControl from "@material-ui/core/FormControl/FormControl";
-
-
 
 const styles = theme => ({
     root: {
@@ -199,7 +196,6 @@ class IntegrationReactSelect extends React.Component {
 
             }),
         };
-
 
         return (
             <div className={classes.root}>
