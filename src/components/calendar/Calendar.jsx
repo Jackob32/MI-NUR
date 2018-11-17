@@ -340,6 +340,7 @@ class Cal extends Component {
                             ||
                             employee.email.includes(this.props.searchEmployee);
                     }
+
                 ).length > 0
             );
         }
