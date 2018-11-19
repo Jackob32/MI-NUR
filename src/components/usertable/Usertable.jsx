@@ -172,14 +172,14 @@ class Usertable extends React.Component {
                                         <TableCell component="th" scope="row">
                                             {row.email}
                                         </TableCell>
-                                        {
-                                        TableCell component="th" scope="row">
-                                        {this.props.onEdit && <IconButton
-                                            color="primary"
-                                            onClick={() => this.props.onEdit(row.id)}>
-                                            <Edit/>
+
+                                        <TableCell component="th" scope="row">
+                                            {this.props.onEdit && <IconButton
+                                                color="primary"
+                                                onClick={() => this.props.onEdit(row.id)}>
+                                                <Edit/>
                                             </IconButton>
-                                        }
+                                            }
                                         <IconButton
                                             color="primary"
                                             onClick={() => this.props.onDelete(row.id)}>
