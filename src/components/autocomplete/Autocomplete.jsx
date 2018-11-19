@@ -210,7 +210,7 @@ class IntegrationReactSelect extends React.Component {
                         onChange={this.props.onChange}
                         onSubmit={this.props.onSubmit}
                         label="Hledat Uživatele"
-                        placeholder="Search a country (start with a)"
+                        placeholder="Hledej Uživatele"
                     />
                 </NoSsr>
             </div>

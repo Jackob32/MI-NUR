@@ -19,7 +19,7 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
-import {events as events, users as rows} from "../../data"
+import {events as events, users as rows, UserOptions as UserOptions} from "../../data"
 import FormControl from '@material-ui/core/FormControl';
 import Usertable from "../usertable/Usertable";
 import Autocomplete from "../autocomplete/Autocomplete";
@@ -327,7 +327,6 @@ class Cal extends Component {
         if (this.props.fullshifts) {
             showEvents = showEvents.concat(this.state.events.filter(event => event.capacity <= event.employees.length));
         }
-
         if (this.props.searchEmployee !== "" && (this.props.auth === "manager" || (this.props.partialshifts && this.props.auth === "employee"))) {
             showEvents = showEvents.filter(
                 event => event.employees.filter(
@@ -345,10 +344,7 @@ class Cal extends Component {
             );
         }
 
-        let options = rows.map(user => ({
-            value: user,
-            label: user.firstname + " " + user.lastname,
-        }));
+
 
         let allViews = Object.keys(BigCalendar.Views).map(k => BigCalendar.Views[k]);
 
@@ -506,7 +502,7 @@ class Cal extends Component {
                                     id="input-with-icon-grid"
                                     label="Hledat Uživatele"
                                     className={classes.textField}
-                                    options={options}
+                                    options={UserOptions}
                                 />
                             </Grid>
                             <Grid item md={2} xs={4}>

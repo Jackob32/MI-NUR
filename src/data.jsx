@@ -128,4 +128,14 @@ let EmployeeData = {
     switch: "/manager",
 };
 
-export {events,users,ManagerData,EmployeeData};
+let UserOptions = users.map(user => ({
+    value: user,
+    label: user.firstname + " " + user.lastname,
+}));
+/*
+UserOptions.unshift({
+    value:"",
+    label: ""
+})
+*/
+export {events,users,ManagerData,EmployeeData,UserOptions};

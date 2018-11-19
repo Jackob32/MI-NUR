@@ -15,7 +15,7 @@ import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
 import TableHead from '@material-ui/core/TableHead';
 import Delete from '@material-ui/icons/Delete';
-
+import Edit from '@material-ui/icons/Edit';
 const actionsStyles = theme => ({
     root: {
         flexShrink: 0,
@@ -173,7 +173,11 @@ class Usertable extends React.Component {
                                             {row.email}
                                         </TableCell>
                                         <TableCell component="th" scope="row">
-
+                                            <IconButton
+                                                color="primary"
+                                                onClick={() => this.props.onEdit(row.id)}>
+                                                <Edit/>
+                                            </IconButton>
                                         <IconButton
                                             color="primary"
                                             onClick={() => this.props.onDelete(row.id)}>

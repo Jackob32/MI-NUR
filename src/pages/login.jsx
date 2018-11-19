@@ -74,7 +74,7 @@ class Login extends React.Component {
                     <Grid container spacing={12}>
                         <Grid item xs>
                         </Grid>
-                        <Grid item xs={4}>
+                        <Grid item xs={8} md={4}>
                             <Paper className={classes.root} elevation={1}>
                                 <Typography variant="h5" component="h3">
                                     Správce Směn

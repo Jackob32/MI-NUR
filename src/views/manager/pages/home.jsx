@@ -13,6 +13,10 @@ import SearchIcon from '@material-ui/icons/Search';
 import {withStyles} from '@material-ui/core/styles';
 import withRoot from '../../../withRoot';
 import styles from '../../../styles';
+import Autocomplete from "../../../components/autocomplete/Autocomplete";
+import {UserOptions as UserOptions} from "../../../data"
+import Button from "@material-ui/core/Button/Button";
+import DialogActions from "@material-ui/core/DialogActions/DialogActions";
 
 class Home extends React.Component {
     state = {
@@ -27,16 +31,22 @@ class Home extends React.Component {
     };
 
 
-    handleSearchChange = (e) => {
+    handleSearchChange = (value) => {
+        let email = "";
+        if (value && value.value && value.value.email) email = value.value.email;
+
         this.setState({
-            searchEmployee: e.target.value,
+            searchEmployee: email,
         });
+
+        console.log(value)
     };
+
 
     render() {
 
         const {classes} = this.props;
-         const {freeshifts, partialshifts, fullshifts} = this.state;
+        const {freeshifts, partialshifts, fullshifts} = this.state;
         const error = [freeshifts, partialshifts, fullshifts].filter(v => v).length < 1;
 
         return (
@@ -84,43 +94,60 @@ class Home extends React.Component {
                         <div className={classes.search}>
                             <Grid container spacing={8} alignItems="flex-end">
                                 <Grid item>
+
+
                                     <SearchIcon/>
 
 
                                 </Grid>
+                                <Autocomplete
+
+                                    onChange={this.handleSearchChange}
+                                    onSubmit={this.handleSearchChange}
+                                    id="input-with-icon-grid"
+                                    label="Hledat Uživatele"
+                                    className={classes.textField}
+                                    options={UserOptions}
+                                />
                                 <Grid item>
-                                    <TextField
-                                        id="input-with-icon-grid"
-                                        label="Hledat Uživatele"
-                                        className={classes.textField}
-                                        value={this.state.searchEmployee}
-                                        onChange={this.handleSearchChange}
-                                    />
+
                                 </Grid>
                             </Grid>
 
                         </div>
+                        <Grid container spacing={8} alignItems="center">
+                        <Grid item>
+
+                            <Button variant="contained" onClick={this.handleSubmit} color="secondary">
+                                Zveřejnit směny
+                            </Button>
+
+                            <Button variant="contained" onClick={this.handleClose} color="primary">
+                                Uzavřít směny
+                            </Button>
+
+                        </Grid>
+                    </Grid>
                     </Grid>
 
                 </Grid>
+                    <Grid item xs>
 
-                <Grid item xs>
+                        <Cal freeshifts={this.state.freeshifts}
+                             partialshifts={this.state.partialshifts}
+                             fullshifts={this.state.fullshifts}
+                             searchEmployee={this.state.searchEmployee}
+                             auth={"manager"}
+                        />
 
-                    <Cal freeshifts={this.state.freeshifts}
-                         partialshifts={this.state.partialshifts}
-                         fullshifts={this.state.fullshifts}
-                         searchEmployee={this.state.searchEmployee}
-                         auth={"manager"}
-                    />
-
-                </Grid>
+                    </Grid>
             </div>
-        );
+    );
     }
-}
+    }
 
-Home.propTypes = {
-    classes: PropTypes.object.isRequired,
-};
+    Home.propTypes = {
+        classes: PropTypes.object.isRequired,
+    };
 
-export default withRoot(withStyles(styles)(Home));
+    export default withRoot(withStyles(styles)(Home));

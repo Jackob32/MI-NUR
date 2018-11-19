@@ -17,6 +17,7 @@ import Input from "@material-ui/core/Input/Input";
 import DialogActions from "@material-ui/core/DialogActions/DialogActions";
 import Select from '@material-ui/core/Select';
 import withRoot from "../../../withRoot";
+import update from "react-addons-update";
 
 
 class Usermanager extends React.Component {
@@ -29,17 +30,30 @@ class Usermanager extends React.Component {
     };
     handleSubmit = () => {
 
-        this.setState({
-            rows: [...this.state.rows, this.state.edituser],
-            edituser: {
-                id: this.state.rows.length + 1,
-                firstname: "",
-                lastname: "",
-                worktime: 0,
-                thisweekworktime: 0,
-                email: ""
-            },
-        });
+        let index = this.state.rows.findIndex(item => item.id === this.state.edituser.id);
+
+        if(index>=0){
+            this.setState((prevState) =>{
+                return {
+                    rows: update(prevState.rows, {[index]: {$set: prevState.edituser}})
+                }
+            });
+
+        }else {
+            this.setState((prevState) => {
+                return {
+                    rows: [...this.state.rows, this.state.edituser],
+                    edituser: {
+                        id: this.state.rows.length + 1,
+                        firstname: "",
+                        lastname: "",
+                        worktime: 0,
+                        thisweekworktime: 0,
+                        email: ""
+                    }
+                };
+            });
+        }
         console.log(this.state);
 
         this.handleClose();
@@ -53,7 +67,19 @@ class Usermanager extends React.Component {
             return {rows: tmpArr,};
         });
     };
+    handleEdit = (id) => {
+        this.handleClickOpen();
 
+
+
+        let index = this.state.rows.findIndex(item => item.id === id);
+        this.setState(prevState => {
+            return {
+                edituser: {...prevState.rows[index]}
+            };
+        });
+
+    };
     handleDialogChange = prop => event => {
         let val = event.target.value;
         this.setState(prevState => {
@@ -62,6 +88,21 @@ class Usermanager extends React.Component {
             };
         });
     };
+    handleNewUser=()=>{
+        this.setState((prevState) => {
+            return {
+                   edituser: {
+                    id: this.state.rows.length + 1,
+                    firstname: "",
+                    lastname: "",
+                    worktime: 0,
+                    thisweekworktime: 0,
+                    email: ""
+                }
+            };
+        });
+        this.handleClickOpen();
+    }
 
     constructor(props) {
         super(props);
@@ -87,11 +128,11 @@ class Usermanager extends React.Component {
         return (
 
             <div>
-<br/>
-                <Button variant="contained" onClick={this.handleClickOpen} color="primary">
+                <br/>
+                <Button variant="contained" onClick={this.handleNewUser} color="primary">
                     Nový uživatel
                 </Button>
-                <Usertable data={this.state.rows} onDelete={this.handleDelete}/>
+                <Usertable data={this.state.rows} onDelete={this.handleDelete} onEdit={this.handleEdit}/>
                 <Dialog
                     open={this.state.isEditModalOpen}
                     onClose={this.handleClose}
@@ -106,7 +147,7 @@ class Usermanager extends React.Component {
                         </DialogContentText>
 
                         <Grid container spacing={16} alignContent={"center"}>
-                            <Grid item xs={12} >
+                            <Grid item xs={12}>
                                 <FormControl fullWidth className={classes.formControl} variant="outlined">
                                     <InputLabel htmlFor="adornment-amount">Jméno</InputLabel>
                                     <Input
