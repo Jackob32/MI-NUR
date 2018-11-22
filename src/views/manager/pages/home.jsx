@@ -41,6 +41,10 @@ class Home extends React.Component {
 
         console.log(value)
     };
+    handleLock(){
+
+
+    };
 
 
     render() {
@@ -115,11 +119,10 @@ class Home extends React.Component {
                             </Grid>
 
                         </div>
-                        <Grid container spacing={8} alignItems="center">
+                        {false &&  <Grid container spacing={8} alignItems="center">
                         <Grid item>
-
-                            <Button variant="contained" onClick={this.handleSubmit} color="secondary">
-                                Zveřejnit směny
+                            <Button variant="contained" onClick={this.handleLock} color="secondary">
+                                Uzamknout směny
                             </Button>
 
                             <Button variant="contained" onClick={this.handleClose} color="primary">
@@ -127,7 +130,7 @@ class Home extends React.Component {
                             </Button>
 
                         </Grid>
-                    </Grid>
+                    </Grid>    }
                     </Grid>
 
                 </Grid>

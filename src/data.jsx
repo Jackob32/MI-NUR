@@ -28,6 +28,7 @@ function createEvent(title, st, en, cap) {
         end: new Date(new Date().setHours(new Date().getHours() - en + random(3))),
         capacity: 2+random(8),
         note: "",
+        locked: false,
         employees:employ
     };
 

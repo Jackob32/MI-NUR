@@ -6,6 +6,11 @@ import styles from "../../styles";
 import {withStyles} from '@material-ui/core/styles';
 import Grid from "@material-ui/core/Grid/Grid";
 import Avatar from "@material-ui/core/Avatar/Avatar";
+import Lock from "@material-ui/icons/Lock";
+import LockOpen from "@material-ui/icons/LockOpen";
+
+
+
 
 function Event(props) {
 
@@ -18,6 +23,9 @@ function Event(props) {
             <Grid container className={classes.root} spacing={0}>
                 <Grid item xs={2}>
                     <div align="left" color={"blue"}>
+
+
+
                             {event.employees.length === event.capacity &&
                             <Avatar className={classes.greenAvatar}>
                                 {event.employees.length}{"/"}{event.capacity}
@@ -32,6 +40,7 @@ function Event(props) {
                             {event.employees.length}{"/"}{event.capacity}
                             </Avatar>
                         }
+                        {event.locked? <Lock /> : <LockOpen />}
 
                     </div>
                 </Grid>

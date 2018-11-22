@@ -71,6 +71,7 @@ class Cal extends Component {
                             title,
                             capacity,
                             note: "",
+                            locked: true,
                             employees: [],
                         },
                     ],
@@ -187,6 +188,53 @@ class Cal extends Component {
             };
         });
     };
+    handleLock=()=>{
+        let start, end;
+        let date=this.state.currentDate;
+        let view=this.state.currentView;
+
+        console.log(date);
+        console.log(view);
+
+
+        // if view is day: from moment(date).startOf('day') to moment(date).endOf('day');
+        if(view === 'day'){
+            start = moment(date).startOf('day');
+            end   = moment(date).endOf('day');
+        }
+        // if view is week: from moment(date).startOf('isoWeek') to moment(date).endOf('isoWeek');
+        else if(view === 'week'){
+            start = moment(date).startOf('isoWeek');
+            end   = moment(date).endOf('isoWeek');
+        }
+        //if view is month: from moment(date).startOf('month').subtract(7, 'days') to moment(date).endOf('month').add(7, 'days'); i do additional 7 days math because you can see adjacent weeks on month view (that is the way how i generate my recurrent events for the Big Calendar, but if you need only start-end of month - just remove that math);
+        else if(view === 'month'){
+            start = moment(date).startOf('month').subtract(7, 'days');
+            end   = moment(date).endOf('month').add(7, 'days');
+        }
+        // if view is agenda: from moment(date).startOf('day') to moment(date).endOf('day').add(1, 'month');
+        else if(view === 'agenda'){
+            start = moment(date).startOf('day');
+            end   = moment(date).endOf('day').add(1, 'month');
+        }
+
+        this.setState((prevState) => {
+
+            let tmpArr = [...prevState.events];
+
+            for(let i=0; i <tmpArr.length; i++)
+            {
+                if(tmpArr[i].start>start && tmpArr[i].end<end)
+                {
+                    tmpArr[i].locked=true;
+                }
+            }
+
+            return {events: tmpArr,};
+        });
+
+}
+
     resizeEvent = ({event, start, end}) => {
 
         const events = this.state.events;
@@ -287,6 +335,8 @@ class Cal extends Component {
                 note: "",
                 employees: []
             },
+            currentDate:new Date(),
+            currentView:"week",
             idcnt: events.length,
             isAddModalOpen: false,
             isEditModalOpen: false,
@@ -351,6 +401,15 @@ class Cal extends Component {
         return (
             <div className="App">
 
+                        <Button align={"right"} variant="contained" onClick={this.handleLock} color="secondary">
+                            Uzamknout směny
+                        </Button>
+                        {false &&
+                        <Button variant="contained" onClick={this.handleClose} color="primary">
+                            Uzavřít směny
+                        </Button>
+                        }
+
                 <ExampleControlSlot.Entry waitForOutlet>
 
                 </ExampleControlSlot.Entry>
@@ -369,6 +428,17 @@ class Cal extends Component {
                         style={{height: "100vh"}}
                         onEventDrop={this.moveEvent}
                         onEventResize={this.resizeEvent}
+                        onNavigate={(date, view) => {
+                            console.log('#### onNavigate');
+                            console.log('#### date=', date);
+                            console.log('#### view=', view);
+                            this.setState({currentDate: date});
+                        }}
+                        onView={(view) => {
+                            console.log('#### onView');
+                            console.log('#### view=', view);
+                            this.setState({currentView: view});
+                        }}
                         rtl
                         longPressThreshold={0}
                         showMultiDayTimes
