@@ -37,6 +37,9 @@ import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop'
 
 import "../../functions";
+import FormControlLabel from "@material-ui/core/FormControlLabel/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox/Checkbox";
+import FormGroup from "@material-ui/core/FormGroup/FormGroup";
 
 require('moment/locale/cs');
 
@@ -177,6 +180,11 @@ class Cal extends Component {
         //  console.log(event.target.type);
         // console.log(event.target.value);
         let val = event.target.value;
+
+        if(val==="false")val=false;
+        if(val==="true")val=true;
+        console.log(val);
+
         if (event.target.type === "datetime-local") {
             //  console.log(val);
             val = new Date(val);
@@ -502,7 +510,7 @@ class Cal extends Component {
 
 
                         <Grid container spacing={16} alignItems={"stretch"}>
-                            <Grid item md={4} xs={12}>
+                            <Grid item md={3}  xs={12}>
                                 <FormControl fullWidth className={classes.formControl} variant="outlined">
                                     <InputLabel htmlFor="adornment-amount">Od</InputLabel>
                                     <Input
@@ -514,7 +522,7 @@ class Cal extends Component {
                                     />
                                 </FormControl>
                             </Grid>
-                            <Grid item md={4} xs={12}>
+                            <Grid item md={3} xs={12}>
                                 <FormControl fullWidth className={classes.formControl} variant="outlined">
                                     <InputLabel htmlFor="adornment-amount">Do</InputLabel>
                                     <Input
@@ -526,7 +534,7 @@ class Cal extends Component {
                                     />
                                 </FormControl>
                             </Grid>
-                            <Grid item md={4} xs={12}>
+                            <Grid item md={3} xs={12}>
                                 <FormControl fullWidth className={classes.formControl} variant="outlined">
                                     <InputLabel htmlFor="adornment-amount">Kapacita</InputLabel>
                                     <Input
@@ -540,6 +548,7 @@ class Cal extends Component {
                                     />
                                 </FormControl>
                             </Grid>
+
                         </Grid>
                         <br/>
                         <Grid container spacing={16} alignContent={"center"}>
@@ -592,6 +601,17 @@ class Cal extends Component {
 
                     </DialogContent>
                     <DialogActions>
+                        <FormControlLabel alignContent={"left"}
+                            control={
+                                <Checkbox
+                                    checked={this.state.dialoginfo.locked}
+                                    onChange={this.handleDialogChange('locked')}
+                                    value={!this.state.dialoginfo.locked}
+                                />
+
+                            }
+                            label="zámek"
+                        />
                         <Button variant="contained" onClick={this.handleSubmit} color="secondary">
                             Uložit
                         </Button>
