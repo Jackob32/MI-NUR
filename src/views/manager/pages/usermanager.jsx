@@ -139,12 +139,9 @@ class Usermanager extends React.Component {
                     aria-labelledby="responsive-dialog-title"
                     maxWidth="xs"
                 >
-                    <DialogTitle id="responsive-dialog-title">Úprava Směny</DialogTitle>
+                    <DialogTitle id="responsive-dialog-title">Uživatel</DialogTitle>
                     <DialogContent>
 
-                        <DialogContentText>
-                            Nový uživatel
-                        </DialogContentText>
 
                         <Grid container spacing={16} alignContent={"center"}>
                             <Grid item xs={12}>
