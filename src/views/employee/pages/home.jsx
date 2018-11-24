@@ -49,7 +49,7 @@ class Home extends React.Component {
                                         <Checkbox checked={partialshifts} onChange={this.handleChange('partialshifts')}
                                                   value="partialshifts"/>
                                     }
-                                    label="Pouze moje směny"
+                                    label="Moje směny"
                                 />
 
                                 <FormControlLabel

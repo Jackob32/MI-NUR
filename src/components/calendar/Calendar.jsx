@@ -154,6 +154,8 @@ class Cal extends Component {
     };
     addUserToEvent = (e) => {
 
+        if(e.locked) return;
+
         let index = this.state.events.findIndex(x => x.id === e.id);
         let userid = rows.findIndex(x => x.email === this.props.searchEmployee);
 
@@ -196,7 +198,9 @@ class Cal extends Component {
             };
         });
     };
-    handleLock=()=>{
+
+    manageLock=(lock)=>{
+
         let start, end;
         let date=this.state.currentDate;
         let view=this.state.currentView;
@@ -232,9 +236,9 @@ class Cal extends Component {
 
             for(let i=0; i <tmpArr.length; i++)
             {
-                if(tmpArr[i].start>start && tmpArr[i].end<end)
+                if(tmpArr[i].start>=start && tmpArr[i].end<=end)
                 {
-                    tmpArr[i].locked=true;
+                    tmpArr[i].locked=lock;
                 }
             }
 
@@ -242,7 +246,13 @@ class Cal extends Component {
         });
 
 }
+    handleLock=()=>{
+        this.manageLock(true);
+    }
+    handleOpen=()=>{
 
+        this.manageLock(false);
+    }
     resizeEvent = ({event, start, end}) => {
 
         const events = this.state.events;
@@ -372,52 +382,80 @@ class Cal extends Component {
         const {classes} = this.props;
         let showEvents = [];
 
-        if (this.props.freeshifts && (this.props.auth && this.props.auth === "manager")) {
-            showEvents = showEvents.concat(this.state.events.filter(event => event.employees.length === 0));
-        } else if (this.props.freeshifts && (this.props.auth && this.props.auth === "employee")) {
-            showEvents = showEvents.concat(this.state.events.filter(event => event.capacity > event.employees.length));
-        }
+        if(this.props.auth && this.props.auth === "manager") {
+            if (this.props.freeshifts) {
+                showEvents = showEvents.concat(this.state.events.filter(event => event.employees.length === 0));
+            }
 
-        if (this.props.partialshifts && (this.props.auth && this.props.auth === "manager")) {
-            showEvents = showEvents.concat(this.state.events.filter(event => event.capacity > event.employees.length && event.employees.length !== 0));
-        }
+            if (this.props.partialshifts ) {
+                showEvents = showEvents.concat(this.state.events.filter(event => event.capacity > event.employees.length && event.employees.length !== 0));
+            }
 
-        if (this.props.fullshifts) {
-            showEvents = showEvents.concat(this.state.events.filter(event => event.capacity <= event.employees.length));
+            if (this.props.fullshifts ) {
+                showEvents = showEvents.concat(this.state.events.filter(event => event.capacity <= event.employees.length));
+            }
+            if (this.props.searchEmployee !== "" ) {
+                showEvents = showEvents.filter(
+                    event => event.employees.filter(
+                        employee => {
+                            return employee.firstname.includes(this.props.searchEmployee)
+                                ||
+                                employee.lastname.includes(this.props.searchEmployee)
+                                ||
+                                (employee.firstname + " " + employee.lastname).includes(this.props.searchEmployee)
+                                ||
+                                employee.email.includes(this.props.searchEmployee);
+                        }
+                    ).length > 0
+                );
+            }
         }
-        if (this.props.searchEmployee !== "" && (this.props.auth === "manager" || (this.props.partialshifts && this.props.auth === "employee"))) {
-            showEvents = showEvents.filter(
+        if (this.props.searchEmployee !== ""  && this.props.auth === "employee") {
+            showEvents = this.state.events.filter(
                 event => event.employees.filter(
                     employee => {
-                        return employee.firstname.includes(this.props.searchEmployee)
+                        return (this.props.partialshifts && (employee.firstname.includes(this.props.searchEmployee)
                             ||
                             employee.lastname.includes(this.props.searchEmployee)
                             ||
                             (employee.firstname + " " + employee.lastname).includes(this.props.searchEmployee)
                             ||
-                            employee.email.includes(this.props.searchEmployee);
+                            employee.email.includes(this.props.searchEmployee)))
+                            ||
+                            (this.props.freeshifts && (
+                                    event.capacity > event.employees.length
+                                )
+                            )
+                            ||
+                            (this.props.fullshifts &&  (event.capacity <= event.employees.length)
+                            )
+                            ;
                     }
-
                 ).length > 0
             );
         }
-
-
 
         let allViews = Object.keys(BigCalendar.Views).map(k => BigCalendar.Views[k]);
 
         return (
             <div className="App">
+                { this.props.auth && this.props.auth === "manager" &&
 
-                        <Button align={"right"} variant="contained" onClick={this.handleLock} color="secondary">
+                       <div>
+                           <Button align={"right"} variant="contained" onClick={this.handleLock} color="secondary">
                             Uzamknout směny
                         </Button>
+
+                <Button align={"right"} variant="contained" onClick={this.handleOpen} color="secondary">
+                    Odemknout směny
+                </Button>
                         {false &&
                         <Button variant="contained" onClick={this.handleClose} color="primary">
                             Uzavřít směny
                         </Button>
                         }
-
+                       </div>
+                }
                 <ExampleControlSlot.Entry waitForOutlet>
 
                 </ExampleControlSlot.Entry>
