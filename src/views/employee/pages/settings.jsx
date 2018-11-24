@@ -19,6 +19,10 @@ import styles from '../../../styles';
 
 class Settings extends React.Component {
     state = {
+        notifshift:true,
+        notif:true,
+        notifmail:true,
+        notifcancelshift:true,
         open: false,
     };
 
@@ -62,7 +66,7 @@ class Settings extends React.Component {
 
                             <FormControlLabel
                                 control={
-                                    <Checkbox checked={true}  onChange={this.handleChange('freeshifts')} value="freeshifts"/>
+                                    <Checkbox checked={this.state.notifshift}  onChange={this.handleChange('notifshift')} value="notifshift"/>
                                 }
                                 label="Notifikace o vypsání nových směn"
                             />
@@ -72,7 +76,7 @@ class Settings extends React.Component {
                         <Grid item xs={12}>
                             <FormControlLabel
                                 control={
-                                    <Checkbox checked={true}  onChange={this.handleChange('partialshifts')} value="partialshifts"/>
+                                    <Checkbox checked={this.state.notif}  onChange={this.handleChange('notif')} value="notif"/>
                                 }
                                 label="Chci dostávat notifikace"
                             />
@@ -81,7 +85,7 @@ class Settings extends React.Component {
 
                             <FormControlLabel
                                 control={
-                                    <Checkbox checked={true}  onChange={this.handleChange('partialshifts')} value="partialshifts"/>
+                                    <Checkbox checked={this.state.notifmail}  onChange={this.handleChange('notifmail')} value="notifmail"/>
                                 }
                                 label="Posílat na email"
                             />
@@ -90,7 +94,7 @@ class Settings extends React.Component {
 
                             <FormControlLabel
                                 control={
-                                    <Checkbox checked={true}  onChange={this.handleChange('partialshifts')} value="partialshifts"/>
+                                    <Checkbox checked={this.state.notifcancelshift}  onChange={this.handleChange('notifcancelshift')} value="notifcancelshift"/>
                                 }
                                 label="Notifikace o zrušení směny"
                             />
