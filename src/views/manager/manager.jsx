@@ -4,7 +4,7 @@ import {withStyles} from '@material-ui/core/styles';
 import withRoot from '../../withRoot';
 import Navigation from "../../components/navigation/Navigation";
 import Home from "./pages/home";
-import Profile from '../../components/profile/Profile';
+import Settings from '../../components/settings/Settings';
 import Usermanager from "./pages/usermanager";
 
 import Grid from '@material-ui/core/Grid';
@@ -39,16 +39,16 @@ class Manager extends React.Component {
                     direction="row"
                     justify="center"
                 >
-                    <Grid item xs={8}>
+                    <Grid item xs={12} md={10} lg={8}>
                         <Navigation data={this.state.navData}/>
                     </Grid>
 
-                    <Grid item xs={8}>
+                    <Grid item xs={12} md={10} lg={8}>
                         <Switch>
                             <Route path={'/manager'} component={Home} exact/>
 
-                            <Route path={'/manager/profile'}
-                                   render={(props) => <Profile {...props} login={this.state.navData.login}
+                            <Route path={'/manager/settings'}
+                                   render={(props) => <Settings {...props} auth={"manager"} login={this.state.navData.login}
                                                                handleSubmit={this.handleSubmit}/>}/>
 
                             <Route path={'/manager/usermanager'} component={Usermanager}/>

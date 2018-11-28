@@ -36,9 +36,13 @@ class Home extends React.Component {
             <div className={classes.root}>
 
 
-                <Grid container spacing={16}>
+                <Grid  container
+                       direction="column"
+                       justify="flex-start"
+                       alignItems="flex-start"
+                       spacing={8} >
 
-                    <Grid item xs={12} sm={6}>
+                    <Grid item xs={12} sm={6} >
 
                         <FormControl component="fieldset" className={classes.formControl}>
                             <FormGroup>

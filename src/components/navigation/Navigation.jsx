@@ -50,39 +50,12 @@ const styles = theme => ({
             display: 'block',
         },
     },
-    search: {
-        position: 'relative',
-        borderRadius: theme.shape.borderRadius,
-        backgroundColor: fade(theme.palette.common.white, 0.15),
-        '&:hover': {
-            backgroundColor: fade(theme.palette.common.white, 0.25),
-        },
-        marginRight: theme.spacing.unit * 2,
-        marginLeft: 0,
-        width: '100%',
-        [theme.breakpoints.up('sm')]: {
-            marginLeft: theme.spacing.unit * 3,
-            width: 'auto',
-        },
-    },
-    searchIcon: {
-        width: theme.spacing.unit * 9,
-        height: '100%',
-        position: 'absolute',
-        pointerEvents: 'none',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
     inputRoot: {
         color: 'inherit',
         width: '100%',
     },
     inputInput: {
-        paddingTop: theme.spacing.unit,
-        paddingRight: theme.spacing.unit,
-        paddingBottom: theme.spacing.unit,
-        paddingLeft: theme.spacing.unit * 10,
+
         transition: theme.transitions.create('width'),
         width: '100%',
         [theme.breakpoints.up('md')]: {
@@ -133,10 +106,10 @@ class Navigation extends React.Component {
         return (
             <div className={classes.root}>
 
-                <Grid container spacing={24}>
-                    <Grid item xs={12} sm={6}>
+                <Grid container spacing={8}>
+                    <Grid item xs={12} sm={6} align={"left"}>
 
-                        <Typography variant="subtitle1" gutterBottom>
+                        <Typography variant="subtitle1">
                             Jste přihlášen jako : {this.props.data.login.firstname}
                             {" "}
                             {this.props.data.login.lastname}
@@ -144,14 +117,7 @@ class Navigation extends React.Component {
 
                     </Grid>
 
-                    <Grid item xs>
-
-                    </Grid>
-
-                    <Grid item xs>
-
-                    </Grid>
-                    <Grid item xs={6} sm={3}>
+                    <Grid item xs={12} sm={6} align={"right"}>
 
 
                         <Button href="#text-buttons" component={Link} to={this.props.data.logout}
@@ -166,7 +132,7 @@ class Navigation extends React.Component {
                         </Button>
                         }
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid item xs={12} sm={12} md={12} lg={12}>
                         <AppBar position="static" color="default">
 
                             <Toolbar>

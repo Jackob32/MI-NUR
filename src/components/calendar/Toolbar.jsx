@@ -73,6 +73,9 @@ function CustomToolbar(toolbar) {
 
                         </div>
                         <div align="right">
+
+
+
                             <Button color="inherit"
                                     onClick={goToDayView}>
                                 Den

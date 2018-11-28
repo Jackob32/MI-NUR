@@ -76,8 +76,8 @@ let ManagerData = {
         },
         {
             value: 1,
-            label:"Můj profil",
-            to:"/manager/profile"
+            label:"Nastavení",
+            to:"/manager/settings"
         },
         {
             value: 2,
@@ -108,11 +108,6 @@ let EmployeeData = {
         },
         {
             value: 1,
-            label:"Můj profil",
-            to:"/employee/profile"
-        },
-        {
-            value: 2,
             label:"Nastavení",
             to:"/employee/settings"
         }

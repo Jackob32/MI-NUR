@@ -175,6 +175,7 @@ class Usermanager extends React.Component {
                                     <Input
                                         id="adornment-amount"
                                         type="email"
+                                        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
                                         value={this.state.edituser.email || ""}
                                         label="email"
                                         onChange={this.handleDialogChange('email')}

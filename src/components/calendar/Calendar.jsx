@@ -4,7 +4,6 @@ import BigCalendar from "react-big-calendar";
 import moment from "moment";
 import createSlot from 'react-tackle-box/Slot'
 import "./Cal.css";
-
 import withRoot from "../../withRoot";
 import styles from "../../styles";
 import {withStyles} from '@material-ui/core/styles';
@@ -40,11 +39,87 @@ import "../../functions";
 import FormControlLabel from "@material-ui/core/FormControlLabel/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox/Checkbox";
 import FormGroup from "@material-ui/core/FormGroup/FormGroup";
+import Lock from "@material-ui/icons/Lock";
+import LockOpen from "@material-ui/icons/LockOpen";
+import Typography from "@material-ui/core/Typography/Typography";
+import SnackbarContent from "@material-ui/core/SnackbarContent/SnackbarContent";
+import IconButton from "@material-ui/core/IconButton/IconButton";
+import classNames from 'classnames';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import ErrorIcon from '@material-ui/icons/Error';
+import InfoIcon from '@material-ui/icons/Info';
+import CloseIcon from '@material-ui/icons/Close';
+
+import amber from '@material-ui/core/colors/amber';
+import WarningIcon from '@material-ui/icons/Warning';
+import Snackbar from "@material-ui/core/Snackbar/Snackbar";
 
 require('moment/locale/cs');
 
 moment.locale('cs');
 
+const styles1 = theme => ({
+    success: {
+        backgroundColor: green[600],
+    },
+    error: {
+        backgroundColor: theme.palette.error.dark,
+    },
+    info: {
+        backgroundColor: theme.palette.primary.dark,
+    },
+    warning: {
+        backgroundColor: amber[700],
+    },
+    icon: {
+        fontSize: 20,
+    },
+    iconVariant: {
+        opacity: 0.9,
+        marginRight: theme.spacing.unit,
+    },
+    message: {
+        display: 'flex',
+        alignItems: 'center',
+    },
+});
+const variantIcon = {
+    success: CheckCircleIcon,
+    warning: WarningIcon,
+    error: ErrorIcon,
+    info: InfoIcon,
+};
+function MySnackbarContent(props) {
+    const { classes, className, message, onClose, variant, ...other } = props;
+    const Icon = variantIcon[variant];
+
+    return (
+        <SnackbarContent
+            className={classNames(classes[variant], className)}
+            aria-describedby="client-snackbar"
+            message={
+                <span id="client-snackbar" className={classes.message}>
+          <Icon className={classNames(classes.icon, classes.iconVariant)} />
+                    {message}
+        </span>
+            }
+            action={[
+                <IconButton
+                    key="close"
+                    aria-label="Close"
+                    color="inherit"
+                    className={classes.close}
+                    onClick={onClose}
+                >
+                    <CloseIcon className={classes.icon} />
+                </IconButton>,
+            ]}
+            {...other}
+        />
+    );
+}
+
+const MySnackbarContentWrapper = withStyles(styles1)(MySnackbarContent);
 
 let ExampleControlSlot = createSlot();
 
@@ -54,17 +129,39 @@ const localizer = BigCalendar.momentLocalizer(moment);
 // the dummy calendar data
 const DragAndDropCalendar = withDragAndDrop(BigCalendar);
 
+const action = (
+    <Button color="secondary" size="small">
+        Vrátit zpět
+    </Button>
+);
 
 class Cal extends Component {
+
+
+    openSuccess=(text)=>{
+        this.setState({
+            openSuccess: true,
+            SuccessText: text
+        });
+    }
+
+    openUndo=(text)=>{
+        this.setState({
+            openUndo: true,
+            UndoText: text
+        });
+    }
 
     handleSelect = ({start, end, slots, action}) => {
         if (this.props.auth && this.props.auth === "manager") {
             var title = window.prompt('Jmeno Směny');
             var capacity = window.prompt('Kapacita směny');
 
-            if (title && capacity) {
+            if (title && capacity && parseInt(capacity, 10)) {
                 let id = this.state.events.length;
+
                 this.setState({
+                    firstevent:false,
                     events: [
                         ...this.state.events,
                         {
@@ -82,6 +179,12 @@ class Cal extends Component {
                     isAddModalOpen: false,
                     isEditModalOpen: false,
                 })
+
+                this.openSuccess("Byla vložena nová směna");
+
+            }else if(capacity && !parseInt(capacity, 10)){
+
+                alert("\""+capacity+"\" není číslo")
             }
         }
     };
@@ -99,6 +202,12 @@ class Cal extends Component {
     handleClose = () => {
         this.setState({isEditModalOpen: false});
     };
+
+    handleSnackClose = () => {
+        this.setState({           openSuccess: false,
+
+            openUndo: false});
+    };
     handleSearchChange = (value) => {
         this.setState({
             searchEmployee: value,
@@ -109,14 +218,37 @@ class Cal extends Component {
         if (this.state.searchEmployee && this.state.searchEmployee.value) {
 
             this.setState({
+                searchEmployee:"",
                 dialoginfo: {
                     ...this.state.dialoginfo,
                     employees: [...this.state.dialoginfo.employees, this.state.searchEmployee.value]
                 }
             });
         }
+
+
         //  console.log(this.state);
     };
+
+    handleDuplicate= () => {
+
+        let index = this.state.events.findIndex(x => x.id === this.state.dialoginfo.id);
+
+        let tmp=this.state.events[index];
+        tmp.id=this.state.idcnt + 1;
+
+        this.setState({
+            firstevent:false,
+            idcnt: this.state.idcnt + 1,
+            events: [
+                ...this.state.events,tmp,
+            ],
+        });
+
+this.handleClose();
+        this.openSuccess("Směna "+tmp.title+" byla zduplikována");
+    };
+
     handleSubmit = () => {
 
         let index = this.state.events.findIndex(x => x.id === this.state.dialoginfo.id);
@@ -132,21 +264,23 @@ class Cal extends Component {
         let index = this.state.dialoginfo.employees.findIndex(item => item.id === x);
 
         let array = [...this.state.dialoginfo.employees];
-        array.splice(index, 1);
+        let user=array.splice(index, 1);
         this.setState({
             dialoginfo: {
                 ...this.state.dialoginfo,
                 employees: array,
             }
         });
+        this.openUndo("Odstranili jste uživatele ");
     };
     handleDelete = () => {
 
         let index = this.state.events.findIndex(x => x.id === this.state.dialoginfo.id);
 
         let array = [...this.state.events]; // make a separate copy of the array
-        array.splice(index, 1);
+        let ev=array.splice(index, 1);
         this.handleClose();
+        this.openUndo("Odstranili jste směnu ");
         this.setState({
             events: array,
         });
@@ -166,16 +300,19 @@ class Cal extends Component {
             newevent.employees.splice(userid, 1);
 
             this.setState({
+                firstevent:false,
                 events: update(this.state.events, {[index]: {$set: newevent}})
             });
-
+            this.openSuccess("Odhlásili jste se ze směny");
         } else if (e.employees.length < e.capacity) {
 
             newevent.employees.push(rows[userid]);
 
             this.setState({
-                events: update(this.state.events, {[index]: {$set: newevent}})
+            firstevent:false,
+            events: update(this.state.events, {[index]: {$set: newevent}})
             });
+            this.openSuccess("Přihlásili jste se na směnu");
         }
     };
     handleDialogChange = prop => event => {
@@ -248,10 +385,12 @@ class Cal extends Component {
 }
     handleLock=()=>{
         this.manageLock(true);
+        this.openSuccess("Směny v kalendáři byly zamčeny");
     }
     handleOpen=()=>{
 
         this.manageLock(false);
+        this.openSuccess("Směny v kalendáři byly odemčeny");
     }
     resizeEvent = ({event, start, end}) => {
 
@@ -344,6 +483,11 @@ class Cal extends Component {
 
         this.state = {
             events: events,
+            firstevent:true,
+            openSuccess: false,
+            SuccessText: "",
+            openUndo: false,
+            UndoText: "",
             dialoginfo: {
                 id: 0,
                 title: 'Volne',
@@ -439,6 +583,12 @@ class Cal extends Component {
 
         return (
             <div className="App">
+                {this.state.firstevent && this.props.auth === "manager" && <Typography variant="h6" color="inherit">
+                Pro vytvoření směny klikněte do kalendáře.
+                </Typography>}
+                {this.state.firstevent && this.props.auth === "employee" && <Typography variant="h6" color="inherit">
+                    Pro přihlášení na směnu klikněte na směnu.
+                </Typography>}
                 { this.props.auth && this.props.auth === "manager" &&
 
                        <div>
@@ -548,7 +698,7 @@ class Cal extends Component {
 
 
                         <Grid container spacing={16} alignItems={"stretch"}>
-                            <Grid item md={3}  xs={12}>
+                            <Grid item md={4}  xs={12}>
                                 <FormControl fullWidth className={classes.formControl} variant="outlined">
                                     <InputLabel htmlFor="adornment-amount">Od</InputLabel>
                                     <Input
@@ -560,7 +710,7 @@ class Cal extends Component {
                                     />
                                 </FormControl>
                             </Grid>
-                            <Grid item md={3} xs={12}>
+                            <Grid item md={4} xs={12}>
                                 <FormControl fullWidth className={classes.formControl} variant="outlined">
                                     <InputLabel htmlFor="adornment-amount">Do</InputLabel>
                                     <Input
@@ -572,7 +722,7 @@ class Cal extends Component {
                                     />
                                 </FormControl>
                             </Grid>
-                            <Grid item md={3} xs={12}>
+                            <Grid item md={4} xs={12}>
                                 <FormControl fullWidth className={classes.formControl} variant="outlined">
                                     <InputLabel htmlFor="adornment-amount">Kapacita</InputLabel>
                                     <Input
@@ -614,7 +764,7 @@ class Cal extends Component {
                                 <Autocomplete
                                     value={this.state.searchEmployee}
                                     onChange={this.handleSearchChange}
-                                    onSubmit={this.handleSearchSubmit}
+                                    onSubmit={this.handleAdd}
 
                                     id="input-with-icon-grid"
                                     label="Hledat Uživatele"
@@ -639,6 +789,11 @@ class Cal extends Component {
 
                     </DialogContent>
                     <DialogActions>
+
+                        <Button variant="contained" onClick={this.handleDuplicate} color="primary">
+                            Duplikovat směnu
+                        </Button>
+
                         <FormControlLabel alignContent={"left"}
                             control={
                                 <Checkbox
@@ -648,7 +803,7 @@ class Cal extends Component {
                                 />
 
                             }
-                            label="zámek"
+                            label={this.state.dialoginfo.locked ? <Lock /> : <LockOpen />}
                         />
                         <Button variant="contained" onClick={this.handleSubmit} color="secondary">
                             Uložit
@@ -663,7 +818,36 @@ class Cal extends Component {
                         </Button>
                     </DialogActions>
                 </Dialog>
-
+                <Snackbar
+                    anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'left',
+                    }}
+                    open={this.state.openSuccess}
+                    autoHideDuration={3000}
+                    onClose={this.handleSnackClose}
+                >
+                <MySnackbarContentWrapper
+                    onClose={this.handleSnackClose}
+                    variant="success"
+                    message={this.state.SuccessText}
+                />
+            </Snackbar>
+                <Snackbar
+                    anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'left',
+                    }}
+                    open={this.state.openUndo}
+                    autoHideDuration={6000}
+                    onClose={this.handleSnackClose}
+                >
+                <SnackbarContent
+                    className={classes.snackbar}
+                    message={this.state.UndoText}
+                    action={action}
+                />
+                </Snackbar>
             </div>
         );
     }

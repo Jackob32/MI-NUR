@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import Navigation from '../../components/navigation/Navigation';
 import Grid from '@material-ui/core/Grid';
 import { Route, Switch } from 'react-router-dom';
-import Profile from '../../components/profile/Profile';
-import Settings from './pages/settings';
+import Settings from '../../components/settings/Settings';
 import Home from './pages/home';
 
 import { withStyles } from '@material-ui/core/styles';
@@ -48,9 +47,9 @@ class Employee extends React.Component {
                         <Switch>
                             <Route path={'/employee'} component={Home} exact />
 
-                            <Route path={'/employee/profile'} render={(props) => <Profile {...props} login={this.state.navData.login} handleSubmit={this.handleSubmit} />} />
+                            <Route path={'/employee/settings'} render={(props) => <Settings {...props} auth={"employee"} login={this.state.navData.login} handleSubmit={this.handleSubmit} />} />
 
-                            <Route path={'/employee/settings'} component={Settings} />
+
                         </Switch>
 
                     </Grid>
