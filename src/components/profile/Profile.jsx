@@ -7,13 +7,10 @@ import {withStyles} from '@material-ui/core/styles';
 import Title from '../title/Title';
 import withRoot from '../../withRoot';
 import styles from '../../styles';
-import {default as Other} from '../../views/employee/pages/settings';
-
 
 import FormControl from "@material-ui/core/FormControl/FormControl";
-import Typography from "@material-ui/core/Typography/Typography";
 
-class Settings extends React.Component {
+class Profile extends React.Component {
 
     handleDialogChange = prop => event => {
         let val = event.target.value;
@@ -41,34 +38,17 @@ class Settings extends React.Component {
     render() {
         const {classes} = this.props;
 
-
         return (
             <div className={classes.root}>
-                {this.props.auth==="employee" &&
+                          <form className={classes.container} noValidate autoComplete="off">
 
-<div>
-                <Typography variant="h6" color="inherit">
-                    Nastavení notifikací
-                </Typography>
-                <Other />
-    <br/>
-            </div> }
-
-                <Typography variant="h6" color="inherit">
-                    Nastavení Uživatele
-                </Typography>
-                <Grid     container
-                          direction="column"
-                          justify="center"
-                          alignItems="center" spacing={8} >
-
-
-
-
-                        <Grid item xs={12} md={6}>
+                    <Grid container spacing={16}>
+                        <Grid item xs>
+                        </Grid>
+                        <Grid item xs={4}>
                             <Grid item xs={12}>
 
-                                <FormControl  variant="outlined">
+                                <FormControl className={classes.formControl} variant="outlined">
                                     <TextField
                                         label="Jméno"
                                         className={classes.textField}
@@ -81,7 +61,7 @@ class Settings extends React.Component {
 
                             </Grid>
                             <Grid item xs={12}>
-                                <FormControl  variant="outlined">
+                                <FormControl className={classes.formControl} variant="outlined">
                                     <TextField
                                         label="Příjmení"
                                         className={classes.textField}
@@ -94,7 +74,7 @@ class Settings extends React.Component {
                             </Grid>
                             <Grid item xs={12}>
 
-                                <FormControl variant="outlined">
+                                <FormControl className={classes.formControl} variant="outlined">
                                     <TextField
                                         label="Email"
                                         className={classes.textField}
@@ -115,19 +95,18 @@ class Settings extends React.Component {
 
                             </Grid>
                         </Grid>
-
-
-
+                        <Grid item xs>
+                        </Grid>
                     </Grid>
-
+                </form>
 
             </div>
         );
     }
 }
 
-Settings.propTypes = {
+Profile.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withRoot(withStyles(styles)(Settings));
+export default withRoot(withStyles(styles)(Profile));

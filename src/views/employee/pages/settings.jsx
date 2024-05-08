@@ -52,11 +52,16 @@ class Settings extends React.Component {
         return (
             <div className={classes.root}>
 
-                <Grid     container
-                          direction="column"
-                          justify="center"
-                          alignItems="center" spacing={8}>
-                     <Grid item xs={4} align={"left"}>
+
+
+                <form className={classes.container} noValidate autoComplete="off">
+
+                                  </form>
+
+                <Grid container spacing={12}>
+                    <Grid item xs>
+                    </Grid>
+                    <Grid item xs={4}>
                         <Grid item xs={12}>
 
                             <FormControlLabel
@@ -95,7 +100,16 @@ class Settings extends React.Component {
                             />
                         </Grid>
 
-                                           </Grid>
+                        <Grid item xs={12}>
+
+                            <Button variant="contained" color="secondary" theme={theme} className={classes.button} >
+                                Uložit
+                            </Button>
+
+                        </Grid>
+                    </Grid>
+                    <Grid item xs>
+                    </Grid>
                 </Grid>
 
             </div>
