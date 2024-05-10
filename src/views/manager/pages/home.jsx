@@ -56,13 +56,9 @@ class Home extends React.Component {
         return (
             <div className={classes.root}>
 
-                            <Grid  container
-                           direction="row"
-                           justify="flex-start"
-                           alignItems="flex-start"
-                           spacing={8} >
+                <Grid container spacing={16}>
 
-                    <Grid item xs={12} sm={6} align={"left"}>
+                    <Grid item xs={12} sm={6}>
 
                         <FormControl component="fieldset" className={classes.formControl}>
                             <FormGroup>
@@ -98,10 +94,9 @@ class Home extends React.Component {
                     </Grid>
 
                     <Grid item xs={12} sm={6}>
-                        <br/>
                         <div className={classes.grow}/>
                         <div className={classes.search}>
-                            <Grid container spacing={24} alignItems="flex-end">
+                            <Grid container spacing={8} alignItems="flex-end">
                                 <Grid item>
 
 
@@ -136,8 +131,6 @@ class Home extends React.Component {
 
                         </Grid>
                     </Grid>    }
-
-
                     </Grid>
 
                 </Grid>
