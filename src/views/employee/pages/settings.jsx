@@ -117,8 +117,6 @@ class Settings extends React.Component {
     }
 }
 
-Settings.propTypes = {
-    classes: PropTypes.object.isRequired,
-};
+Settings.propTypes = { classes: PropTypes.object.isRequired };
 
 export default withRoot(withStyles(styles)(Settings));
