@@ -219,8 +219,24 @@ class IntegrationReactSelect extends React.Component {
 }
 
 IntegrationReactSelect.propTypes = {
-    classes: PropTypes.object.isRequired,
-    theme: PropTypes.object.isRequired,
+    classes:   PropTypes.object.isRequired,
+    theme:     PropTypes.object.isRequired,
+    options:   PropTypes.arrayOf(PropTypes.shape({
+        value: PropTypes.any,
+        label: PropTypes.string,
+    })).isRequired,
+    value:     PropTypes.object,
+    onChange:  PropTypes.func.isRequired,
+    onSubmit:  PropTypes.func,
+    id:        PropTypes.string,
+    label:     PropTypes.string,
+};
+
+IntegrationReactSelect.defaultProps = {
+    value:    null,
+    onSubmit: undefined,
+    id:       undefined,
+    label:    undefined,
 };
 
 export default withStyles(styles, { withTheme: true })(IntegrationReactSelect);

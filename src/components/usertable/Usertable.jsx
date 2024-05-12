@@ -218,6 +218,9 @@ class Usertable extends React.Component {
 
 Usertable.propTypes = {
     classes: PropTypes.object.isRequired,
+    data: PropTypes.array.isRequired,
+    onDelete: PropTypes.func.isRequired,
+    onEdit: PropTypes.func,
 };
 
 export default withStyles(styles)(Usertable);

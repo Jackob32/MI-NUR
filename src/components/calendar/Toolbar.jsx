@@ -91,7 +91,7 @@ function CustomToolbar(toolbar) {
     );
 }
 
-
+CustomToolbar.propTypes = { classes: PropTypes.object.isRequired };
 CustomToolbar.propTypes = {
     classes: PropTypes.object.isRequired,
 };

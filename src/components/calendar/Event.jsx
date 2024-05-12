@@ -58,6 +58,13 @@ function Event(props) {
 
 Event.propTypes = {
     classes: PropTypes.object.isRequired,
+    event:   PropTypes.shape({
+        employees: PropTypes.array.isRequired,
+        capacity:  PropTypes.number.isRequired,
+        start:     PropTypes.instanceOf(Date).isRequired,
+        note:      PropTypes.string,
+        interests: PropTypes.array,
+    }).isRequired,
 };
 
 export default withRoot(withStyles(styles)(Event));
