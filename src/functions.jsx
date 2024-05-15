@@ -1,20 +1,10 @@
-Date.prototype.toDatetimeLocal =
-    function toDatetimeLocal() {
-        var
-            date = this,
-            ten = function (i) {
-                return (i < 10 ? '0' : '') + i;
-            },
-            YYYY = date.getFullYear(),
-            MM = ten(date.getMonth() + 1),
-            DD = ten(date.getDate()),
-            HH = ten(date.getHours()),
-            II = ten(date.getMinutes()),
-            SS = ten(date.getSeconds())
-        ;
-        return YYYY + '-' + MM + '-' + DD + 'T' +
-            HH + ':' + II + ':' + SS;
-    };
+/* ── Backward-compatible re-exports ─────────────────────────────────────────
+   All utilities now live in src/utils/. Import from there in new code.
+   This file exists so existing imports of "../../functions" keep working.
+─────────────────────────────────────────────────────────────────────────── */
+export { toDatetimeLocal, formatDuration, msToHours } from './utils/date';
+export { exportShiftsToCSV }                          from './utils/csv';
+export { computeScheduledHours, getEmployeeWorkload, overlaps } from './utils/shift';
 
 Date.prototype.fromDatetimeLocal = (function (BST) {
     // BST should not be present as UTC time
