@@ -10,108 +10,10 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
-import FirstPageIcon from '@material-ui/icons/FirstPage';
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-import LastPageIcon from '@material-ui/icons/LastPage';
+import TablePaginationActions from './TablePaginationActions';
 import TableHead from '@material-ui/core/TableHead';
-import Delete from '@material-ui/icons/Delete';
-import Edit from '@material-ui/icons/Edit';
 
-const paginationStyles = (theme) => ({
-  root: {
-    flexShrink: 0,
-    color: theme.palette.text.secondary,
-    marginLeft: theme.spacing.unit * 2.5,
-  },
-});
-
-class TablePaginationActions extends React.Component {
-  handleFirstPageButtonClick = (e) => this.props.onChangePage(e, 0);
-  handleBackButtonClick = (e) =>
-    this.props.onChangePage(e, this.props.page - 1);
-  handleNextButtonClick = (e) =>
-    this.props.onChangePage(e, this.props.page + 1);
-  handleLastPageButtonClick = (e) =>
-    this.props.onChangePage(
-      e,
-      Math.max(0, Math.ceil(this.props.count / this.props.rowsPerPage) - 1),
-    );
-
-  render() {
-    const { classes, count, page, rowsPerPage, theme } = this.props;
-    const lastPage = Math.ceil(count / rowsPerPage) - 1;
-    return (
-      <div className={classes.root}>
-        <Tooltip title='První strana'>
-          <span>
-            <IconButton
-              onClick={this.handleFirstPageButtonClick}
-              disabled={page === 0}
-              aria-label='První strana'
-            >
-              {theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon />}
-            </IconButton>
-          </span>
-        </Tooltip>
-        <Tooltip title='Předchozí strana'>
-          <span>
-            <IconButton
-              onClick={this.handleBackButtonClick}
-              disabled={page === 0}
-              aria-label='Předchozí strana'
-            >
-              {theme.direction === 'rtl' ? (
-                <KeyboardArrowRight />
-              ) : (
-                <KeyboardArrowLeft />
-              )}
-            </IconButton>
-          </span>
-        </Tooltip>
-        <Tooltip title='Další strana'>
-          <span>
-            <IconButton
-              onClick={this.handleNextButtonClick}
-              disabled={page >= lastPage}
-              aria-label='Další strana'
-            >
-              {theme.direction === 'rtl' ? (
-                <KeyboardArrowLeft />
-              ) : (
-                <KeyboardArrowRight />
-              )}
-            </IconButton>
-          </span>
-        </Tooltip>
-        <Tooltip title='Poslední strana'>
-          <span>
-            <IconButton
-              onClick={this.handleLastPageButtonClick}
-              disabled={page >= lastPage}
-              aria-label='Poslední strana'
-            >
-              {theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon />}
-            </IconButton>
-          </span>
-        </Tooltip>
-      </div>
-    );
-  }
-}
-
-TablePaginationActions.propTypes = {
-  classes: PropTypes.object.isRequired,
-  count: PropTypes.number.isRequired,
-  onChangePage: PropTypes.func.isRequired,
-  page: PropTypes.number.isRequired,
-  rowsPerPage: PropTypes.number.isRequired,
-  theme: PropTypes.object.isRequired,
-};
-
-const TablePaginationActionsWrapped = withStyles(paginationStyles, {
-  withTheme: true,
-})(TablePaginationActions);
+import UserRow from './UserRow';
 
 const styles = (theme) => ({
   root: { width: '100%', marginTop: theme.spacing.unit * 2 },
@@ -134,79 +36,7 @@ const styles = (theme) => ({
   },
 });
 
-function RoleBadge({ type }) {
-  const isManager = type === 'manager';
-  return (
-    <span
-      style={{
-        display: 'inline-flex',
-        alignItems: 'center',
-        padding: '2px 8px',
-        borderRadius: 999,
-        fontSize: '0.7rem',
-        fontWeight: 600,
-        letterSpacing: '0.01em',
-        whiteSpace: 'nowrap',
-        background: isManager
-          ? 'rgba(26,115,232,0.08)'
-          : 'rgba(52,168,83,0.08)',
-        color: isManager ? '#1A73E8' : '#34A853',
-        border: isManager
-          ? '1px solid rgba(26,115,232,0.2)'
-          : '1px solid rgba(52,168,83,0.2)',
-      }}
-    >
-      {isManager ? 'Vedoucí' : 'Zaměstnanec'}
-    </span>
-  );
-}
-
-function HoursBar({ contracted, scheduled }) {
-  const pct =
-    contracted > 0
-      ? Math.min(100, Math.round((scheduled / contracted) * 100))
-      : 0;
-  const color = pct >= 100 ? '#EA4335' : pct >= 75 ? '#FBBC04' : '#34A853';
-  return (
-    <div style={{ minWidth: 70 }}>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          fontSize: '0.72rem',
-          marginBottom: 2,
-        }}
-      >
-        <span style={{ color: '#0F172A', fontWeight: 600 }}>
-          {contracted} h
-        </span>
-        {scheduled > 0 && (
-          <span style={{ color: '#94A3B8', fontSize: '0.65rem' }}>
-            {Math.round(scheduled)}h plán.
-          </span>
-        )}
-      </div>
-      <div
-        style={{
-          height: 4,
-          borderRadius: 4,
-          background: '#E2E8F0',
-          overflow: 'hidden',
-        }}
-      >
-        <div
-          style={{
-            width: `${pct}%`,
-            height: '100%',
-            background: color,
-            borderRadius: 4,
-            transition: 'width 0.3s',
-          }}
-        />
-      </div>
-    </div>
-  );
-}
+// Subcomponents extracted into separate files: TablePaginationActions, UserRow, RoleBadge, HoursBar
 
 class Usertable extends React.Component {
   state = { page: 0, rowsPerPage: this.props.initialRowsPerPage || 5 };
@@ -255,54 +85,15 @@ class Usertable extends React.Component {
             </TableHead>
             <TableBody>
               {pageRows.map((row) => (
-                <TableRow key={row.id} hover>
-                  {!compact && <TableCell numeric>{row.id}</TableCell>}
-                  <TableCell>{row.firstname}</TableCell>
-                  <TableCell>{row.lastname}</TableCell>
-                  {!compact && (
-                    <TableCell>
-                      {row.type && <RoleBadge type={row.type} />}
-                    </TableCell>
-                  )}
-                  <TableCell numeric>
-                    <HoursBar
-                      contracted={Number(row.worktime) || 0}
-                      scheduled={scheduledHours[row.email] || 0}
-                    />
-                  </TableCell>
-                  <TableCell
-                    style={{
-                      maxWidth: compact ? 160 : undefined,
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                      whiteSpace: 'nowrap',
-                    }}
-                  >
-                    {row.email}
-                  </TableCell>
-                  <TableCell className={classes.actionCell}>
-                    {this.props.onEdit && (
-                      <Tooltip title='Upravit uživatele'>
-                        <IconButton
-                          aria-label='Upravit uživatele'
-                          color='primary'
-                          onClick={() => this.props.onEdit(row.id)}
-                        >
-                          <Edit />
-                        </IconButton>
-                      </Tooltip>
-                    )}
-                    <Tooltip title='Odstranit uživatele'>
-                      <IconButton
-                        aria-label='Odstranit uživatele'
-                        className={classes.deleteButton}
-                        onClick={() => this.props.onDelete(row.id)}
-                      >
-                        <Delete />
-                      </IconButton>
-                    </Tooltip>
-                  </TableCell>
-                </TableRow>
+                <UserRow
+                  key={row.id}
+                  row={row}
+                  compact={compact}
+                  scheduledHours={scheduledHours}
+                  onEdit={this.props.onEdit}
+                  onDelete={this.props.onDelete}
+                  classes={classes}
+                />
               ))}
               {emptyRows > 0 && (
                 <TableRow style={{ height: 48 * emptyRows }}>
@@ -320,7 +111,7 @@ class Usertable extends React.Component {
                   labelRowsPerPage='Řádků na stránce:'
                   onChangePage={this.handleChangePage}
                   onChangeRowsPerPage={this.handleChangeRowsPerPage}
-                  ActionsComponent={TablePaginationActionsWrapped}
+                  ActionsComponent={TablePaginationActions}
                 />
               </TableRow>
             </TableFooter>
