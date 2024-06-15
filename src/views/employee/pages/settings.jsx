@@ -1,120 +1,90 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Button from '@material-ui/core/Button';
-
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-
-
 import Grid from '@material-ui/core/Grid';
 import Checkbox from '@material-ui/core/Checkbox';
-import { withStyles, createMuiTheme } from '@material-ui/core/styles';
-import green from '@material-ui/core/colors/green';
-
-import Title from '../../../components/title/Title';
-
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Typography from '@material-ui/core/Typography';
+import { withStyles } from '@material-ui/core/styles';
 import withRoot from '../../../withRoot';
-
 import styles from '../../../styles';
+import { saveSettings, loadSettings } from '../../../storage';
 
+const SETTINGS_KEY = 'employee_notifications';
+const DEFAULTS = {
+  notifshift: true,
+  notif: true,
+  notifmail: true,
+  notifcancelshift: true,
+};
+
+const NOTIF_OPTIONS = [
+  { key: 'notifshift', label: 'Notifikace o vypsání nových směn' },
+  { key: 'notif', label: 'Chci dostávat notifikace' },
+  { key: 'notifmail', label: 'Posílat na email' },
+  { key: 'notifcancelshift', label: 'Notifikace o zrušení směny' },
+];
 
 class Settings extends React.Component {
-    state = {
-        notifshift:true,
-        notif:true,
-        notifmail:true,
-        notifcancelshift:true,
-        open: false,
-    };
+  constructor(props) {
+    super(props);
+    /* ── Load notification prefs from localStorage (#3) ── */
+    this.state = loadSettings(SETTINGS_KEY, DEFAULTS);
+  }
 
-    handleChange = name => event => {
-        this.setState({[name]: event.target.checked});
-    };
+  handleChange = (name) => (event) => {
+    const val = event.target.checked;
+    this.setState({ [name]: val }, () =>
+      saveSettings(SETTINGS_KEY, this.state),
+    );
+  };
 
-
-    handleSearchChange= (e) => {
-        this.setState({
-            searchEmployee: e.target.value,
-        });
-    };
-
-    render() {
-        const { classes } = this.props;
-
-        const theme = createMuiTheme({
-            palette: {
-                primary: green,
-            },
-            typography: {
-                useNextVariants: true,
-            },
-        });
-
-        return (
-            <div className={classes.root}>
-
-
-
-                <form className={classes.container} noValidate autoComplete="off">
-
-                                  </form>
-
-                <Grid container spacing={12}>
-                    <Grid item xs>
-                    </Grid>
-                    <Grid item xs={4}>
-                        <Grid item xs={12}>
-
-                            <FormControlLabel
-                                control={
-                                    <Checkbox checked={this.state.notifshift}  onChange={this.handleChange('notifshift')} value="notifshift"/>
-                                }
-                                label="Notifikace o vypsání nových směn"
-                            />
-
-
-                        </Grid>
-                        <Grid item xs={12}>
-                            <FormControlLabel
-                                control={
-                                    <Checkbox checked={this.state.notif}  onChange={this.handleChange('notif')} value="notif"/>
-                                }
-                                label="Chci dostávat notifikace"
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-
-                            <FormControlLabel
-                                control={
-                                    <Checkbox checked={this.state.notifmail}  onChange={this.handleChange('notifmail')} value="notifmail"/>
-                                }
-                                label="Posílat na email"
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-
-                            <FormControlLabel
-                                control={
-                                    <Checkbox checked={this.state.notifcancelshift}  onChange={this.handleChange('notifcancelshift')} value="notifcancelshift"/>
-                                }
-                                label="Notifikace o zrušení směny"
-                            />
-                        </Grid>
-
-                        <Grid item xs={12}>
-
-                            <Button variant="contained" color="secondary" theme={theme} className={classes.button} >
-                                Uložit
-                            </Button>
-
-                        </Grid>
-                    </Grid>
-                    <Grid item xs>
-                    </Grid>
-                </Grid>
-
-            </div>
-        );
-    }
+  render() {
+    const { classes } = this.props;
+    return (
+      <div className={classes.pageRoot}>
+        <Grid
+          container
+          direction='column'
+          justify='center'
+          alignItems='center'
+          spacing={8}
+        >
+          <Grid item xs={12} sm={6} md={4} style={{ textAlign: 'left' }}>
+            <Typography
+              variant='subtitle1'
+              color='textSecondary'
+              gutterBottom
+              style={{ fontWeight: 600 }}
+            >
+              Nastavení notifikací
+            </Typography>
+            {NOTIF_OPTIONS.map((opt) => (
+              <Grid item xs={12} key={opt.key}>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={!!this.state[opt.key]}
+                      onChange={this.handleChange(opt.key)}
+                      value={opt.key}
+                      color='primary'
+                    />
+                  }
+                  label={opt.label}
+                />
+              </Grid>
+            ))}
+            <Typography
+              variant='caption'
+              color='textSecondary'
+              style={{ marginTop: 12, display: 'block' }}
+            >
+              Nastavení jsou uložena automaticky v prohlížeči.
+            </Typography>
+          </Grid>
+        </Grid>
+      </div>
+    );
+  }
 }
 
 Settings.propTypes = { classes: PropTypes.object.isRequired };
